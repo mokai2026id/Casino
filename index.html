@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>🏆 کازینوی خانوادگی | محمدمهدی</title>
+    <style>
+        :root {
+            --bg: #0a0a14;
+            --surface: #141428;
+            --surface2: #1e1e36;
+            --gold: #d4a843;
+            --gold-light: #f0d68a;
+            --text: #f0e6d2;
+            --text-secondary: #b0a48e;
+            --border: #2a2a44;
+            --radius: 16px;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tahoma', 'Segoe UI', 'Iranian Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 520px;
+            animation: fadeSlide 0.5s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .app-container.wide { max-width: 1100px; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover { box-shadow: 0 0 20px rgba(212, 168, 67, 0.5), var(--shadow); }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        h1 {
+            font-size: 1.8em;
+            color: var(--gold-light);
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+        }
+        h2, h3 {
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .footer-text {
+            text-align: center;
+            font-size: 0.75em;
+            color: var(--text-secondary);
+            margin-top: 20px;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        .gold-text { color: var(--gold-light); font-weight: bold; }
+        .balance-big {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: var(--gold-light);
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .form-group { margin-bottom: 16px; }
+        label { display: block; margin-bottom: 6px; color: var(--text-secondary); font-size: 0.9em; }
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+            margin: 8px 0;
+        }
+        input:focus, select:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.3);
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: inherit;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #c8963e, #d4a843);
+            color: #1a1a0a;
+            box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4);
+            width: 100%;
+        }
+        .btn-gold:hover { box-shadow: 0 8px 30px rgba(212, 168, 67, 0.7); transform: translateY(-2px); }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+        .btn-outline:hover { background: rgba(212, 168, 67, 0.1); }
+        .btn-sm { padding: 8px 16px; font-size: 0.85em; border-radius: 10px; }
+        .table-wrapper { overflow-x: auto; margin: 12px 0; border-radius: 12px; background: rgba(0, 0, 0, 0.2); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85em; white-space: nowrap; }
+        th, td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--border); }
+        th { background: var(--surface2); color: var(--gold); font-weight: bold; }
+        tr:hover td { background: rgba(212, 168, 67, 0.08); }
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+        .badge-win { background: rgba(39, 174, 96, 0.3); color: #2ecc71; }
+        .badge-lose { background: rgba(192, 57, 43, 0.3); color: #e74c3c; }
+        .badge-pending { background: rgba(241, 196, 15, 0.25); color: #f1c40f; }
+        .badge-auto { background: rgba(52, 152, 219, 0.3); color: #3498db; }
+        .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; border-bottom: 2px solid var(--border); }
+        .tab-btn {
+            padding: 10px 18px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9em;
+            border-radius: 10px 10px 0 0;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            color: var(--gold-light);
+            font-weight: bold;
+            background: rgba(212, 168, 67, 0.12);
+            box-shadow: inset 0 -3px 0 var(--gold);
+        }
+        .tab-content { display: none; animation: fadeSlide 0.4s ease; }
+        .tab-content.active { display: block; }
+        .match-time {
+            display: inline-block;
+            background: rgba(212, 168, 67, 0.2);
+            color: var(--gold-light);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 8px;
+        }
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .card { padding: 20px 16px; }
+            h1 { font-size: 1.5em; }
+            .balance-big { font-size: 1.8em; }
+            .btn { padding: 12px 18px; font-size: 0.9em; }
+            .flex-row>* { min-width: 100%; }
+            .tab-btn { padding: 8px 12px; font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container" id="appContainer"></div>
+    <div class="footer-text">طراح محمدمهدی | نسخه ۱.۰ | ۱۴۰۵</div>
+
+    <script>
+        (function() {
+            // ---------- CONSTANTS ----------
+            const STORAGE_KEY = 'casinoFamilyV10';
+            const VERSION_KEY = 'casinoDataVersion';
+            const DATA_VERSION = 7; // افزایش نسخه برای ویژگی ثبت خودکار
+
+            const DEFAULT_DATA = {
+                users: [
+                    { id: 'rez', name: 'رضا', password: '1234', balance: 15 },
+                    { id: 'sep', name: 'سپیده', password: '5678', balance: -5 },
+                    { id: 'rey', name: 'ریحانه', password: '1111', balance: 15 },
+                    { id: 'شایان', name: 'شایان', password: '2222', balance: -20 }
+                ],
+                bets: [
+                    // Game 1
+                    { userId: 'rez', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'sep', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'rey', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'شایان', matchId: 1, team: 'آفریقای جنوبی', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
+                    // Game 2
+                    { userId: 'sep', matchId: 2, team: 'ژاپن', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
+                    { userId: 'شایان', matchId: 2, team: 'ژاپن', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
+                    { userId: 'rey', matchId: 2, team: 'برزیل', amount: 10, odds: 2.0, result: 'win', profit: 10, type: 'manual' },
+                    { userId: 'rez', matchId: 2, team: 'برزیل', amount: 10, odds: 2.0, result: 'win', profit: 10, type: 'manual' },
+                    // Game 3
+                    { userId: 'rez', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'rey', matchId: 3, team: 'آلمان', amount: 15, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'sep', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: null, profit: 0, type: 'auto' },
+                    // Game 4
+                    { userId: 'rez', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'rey', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'sep', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: null, profit: 0, type: 'auto' }
+                ],
+                matches: [
+                    { id: 1, team1: 'کانادا', team2: 'آفریقای جنوبی', odds1: 1.5, odds2: 2.0, result: 'کانادا', status: 'closed', time: '۲۲:۳۰ - ۷ تیر' },
+                    { id: 2, team1: 'برزیل', team2: 'ژاپن', odds1: 2.0, odds2: 1.5, result: 'برزیل', status: 'closed', time: '۲۰:۳۰ - ۸ تیر' },
+                    { id: 3, team1: 'آلمان', team2: 'پاراگوئه', odds1: 1.1, odds2: 5.0, result: null, status: 'open', time: '۰۰:۰۰ - ۹ تیر' },
+                    { id: 4, team1: 'هلند', team2: 'مراکش', odds1: 1.5, odds2: 2.0, result: null, status: 'upcoming', time: '۰۴:۳۰ - ۹ تیر' }
+                ],
+                casinoBalance: -5,
+                pendingBets: []
+            };
+
+            // ---------- FLAGS ----------
+            const countryFlags = {
+                'کانادا': '🇨🇦', 'آفریقای جنوبی': '🇿🇦', 'برزیل': '🇧🇷', 'ژاپن': '🇯🇵',
+                'آلمان': '🇩🇪', 'پاراگوئه': '🇵🇾', 'هلند': '🇳🇱', 'مراکش': '🇲🇦'
+            };
+            function getFlag(c) { return countryFlags[c] || '🏳️'; }
+
+            // ---------- DATA MANAGEMENT ----------
+            function loadData() {
+                const savedVersion = localStorage.getItem(VERSION_KEY);
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                if (!savedVersion || parseInt(savedVersion) < DATA_VERSION) {
+                    localStorage.setItem(VERSION_KEY, DATA_VERSION);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_DATA));
+                    return JSON.parse(JSON.stringify(DEFAULT_DATA));
+                }
+                if (savedData) {
+                    try { return JSON.parse(savedData); } catch (e) {}
+                }
+                return JSON.parse(JSON.stringify(DEFAULT_DATA));
+            }
+            function saveData(data) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                localStorage.setItem(VERSION_KEY, DATA_VERSION);
+            }
+
+            let appData = loadData();
+            let currentUser = null;
+
+            // ---------- UTILS ----------
+            function formatMoney(v) {
+                const absV = Math.abs(v);
+                const sign = v < 0 ? '−' : '';
+                if (absV >= 1000) {
+                    const millions = (absV / 1000);
+                    const formatted = millions % 1 === 0 ? millions.toLocaleString('fa-IR') : millions.toLocaleString('fa-IR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+                    return sign + formatted + ' میلیون تومان';
+                }
+                return sign + absV.toLocaleString('fa-IR') + ' هزار تومان';
+            }
+            function formatToman(v) {
+                return v.toLocaleString('fa-IR') + ' تومان';
+            }
+
+            function getUserById(id) { return appData.users.find(u => u.id === id); }
+            function getMatchById(id) { return appData.matches.find(m => m.id === id); }
+
+            // ---------- Iran Time Parsing ----------
+            const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+            const persianMonths = {
+                'فروردین':0,'اردیبهشت':1,'خرداد':2,'تیر':3,'مرداد':4,'شهریور':5,
+                'مهر':6,'آبان':7,'آذر':8,'دی':9,'بهمن':10,'اسفند':11
+            };
+            function parsePersianNumber(str) {
+                let out = '';
+                for (let ch of str) {
+                    const idx = persianDigits.indexOf(ch);
+                    out += idx >= 0 ? idx : ch;
+                }
+                return out;
+            }
+            function parseMatchTime(timeStr) {
+                // Expected format: "HH:MM - D Month"
+                const parts = timeStr.split(' - ');
+                if (parts.length !== 2) return null;
+                const timePart = parsePersianNumber(parts[0].trim()); // e.g., "22:30"
+                const datePart = parts[1].trim(); // e.g., "۷ تیر"
+                const [hourStr, minuteStr] = timePart.split(':');
+                const hour = parseInt(hourStr), minute = parseInt(minuteStr);
+                const dateParts = datePart.split(' ');
+                if (dateParts.length !== 2) return null;
+                const day = parseInt(parsePersianNumber(dateParts[0]));
+                const monthName = dateParts[1];
+                const month = persianMonths[monthName];
+                if (month === undefined || isNaN(hour) || isNaN(minute) || isNaN(day)) return null;
+                const now = new Date();
+                const year = now.getFullYear(); // assuming match in current year
+                // Create UTC date for Iran time (Iran = UTC+4:30)
+                const iranOffset = 4.5 * 60 * 60000; // milliseconds
+                // Construct date as Iran local time: Iran local = UTC + 4:30 => UTC = local - 4:30
+                const utcDate = Date.UTC(year, month, day, hour, minute) - iranOffset;
+                return new Date(utcDate);
+            }
+
+            function isMatchTimePast(match) {
+                const matchDate = parseMatchTime(match.time);
+                if (!matchDate) return false;
+                return Date.now() >= matchDate.getTime();
+            }
+
+            // ---------- Auto Bet Placement ----------
+            function autoPlaceBets() {
+                const openMatches = appData.matches.filter(m => m.status === 'open');
+                let changed = false;
+                openMatches.forEach(match => {
+                    if (!isMatchTimePast(match)) return;
+                    appData.users.forEach(user => {
+                        const existingBet = appData.bets.find(b => b.matchId === match.id && b.userId === user.id);
+                        if (existingBet) return; // already placed manually or auto
+                        // Choose favorite (lower odds)
+                        const favoriteTeam = match.odds1 < match.odds2 ? match.team1 : match.team2;
+                        const odds = match.odds1 < match.odds2 ? match.odds1 : match.odds2;
+                        appData.bets.push({
+                            userId: user.id,
+                            matchId: match.id,
+                            team: favoriteTeam,
+                            amount: 10, // 10 هزار تومان = 10,000 تومان
+                            odds: odds,
+                            result: null,
+                            profit: 0,
+                            type: 'auto'
+                        });
+                        changed = true;
+                    });
+                });
+                if (changed) saveData(appData);
+            }
+
+            // اجرای خودکار و سپس هر ۶۰ ثانیه
+            autoPlaceBets();
+            setInterval(autoPlaceBets, 60000);
+
+            // ---------- RENDER ----------
+            function renderApp() {
+                const container = document.getElementById('appContainer');
+                if (!currentUser) {
+                    container.classList.remove('wide');
+                    container.innerHTML = renderLogin();
+                    attachLoginEvents();
+                } else if (currentUser.id === 'admin') {
+                    container.classList.add('wide');
+                    container.innerHTML = renderAdminPanel();
+                    attachAdminEvents();
+                } else {
+                    container.classList.remove('wide');
+                    container.innerHTML = renderUserPanel();
+                    attachUserEvents();
+                }
+            }
+
+            // ---------- LOGIN ----------
+            function renderLogin() {
+                return `
+                <div class="card">
+                    <h1>🎰 کازینوی خانوادگی</h1>
+                    <p style="text-align:center;">لطفاً نام کاربری و رمز خود را وارد کنید</p>
+                    <input type="text" id="loginUsername" placeholder="نام کاربری">
+                    <input type="password" id="loginPassword" placeholder="رمز عددی">
+                    <button class="btn btn-gold" id="btnLoginUser">ورود کاربر</button>
+                    <button class="btn btn-outline" id="btnAdminLogin" style="width:100%; margin-top:8px;">ورود ادمین</button>
+                    <button class="btn btn-outline" id="btnHelp" style="width:100%; margin-top:8px;">📖 راهنما</button>
+                </div>`;
+            }
+
+            function attachLoginEvents() {
+                document.getElementById('btnLoginUser').onclick = () => {
+                    const uid = document.getElementById('loginUsername').value.trim();
+                    const pwd = document.getElementById('loginPassword').value.trim();
+                    if (!uid || !pwd) return alert('لطفاً هر دو فیلد را پر کنید.');
+                    const user = appData.users.find(u => u.id === uid && u.password === pwd);
+                    if (user) { currentUser = user; renderApp(); }
+                    else alert('❌ نام کاربری یا رمز اشتباه است.');
+                };
+                document.getElementById('btnAdminLogin').onclick = () => {
+                    const pass = prompt('رمز ادمین (۱۲ رقمی):');
+                    if (pass === '123123456') { currentUser = { id: 'admin', name: 'ادمین' }; renderApp(); }
+                    else alert('❌ رمز ادمین نادرست است.');
+                };
+                document.getElementById('btnHelp').onclick = () => {
+                    alert(`📌 قوانین شرط‌بندی:\n- حداقل شرط: ۱۰ هزار تومان\n- اگر موجودی صفر یا منفی باشد، حداکثر ۱۰ هزار تومان می‌توانید شرط ببندید.\n- اگر تا ساعت شروع بازی شرط خود را انتخاب نکنید، سیستم به‌طور خودکار تیم با ضریب کمتر را برای شما ثبت می‌کند.\n- برای افزایش موجودی با ادمین تماس بگیرید.`);
+                };
+            }
+
+            // ---------- USER PANEL ----------
+            function renderUserPanel() {
+                const user = getUserById(currentUser.id);
+                if (!user) { logout(); return ''; }
+                const openMatches = appData.matches.filter(m => m.status === 'open');
+                const upcomingMatches = appData.matches.filter(m => m.status === 'upcoming');
+                const bets = appData.bets.filter(b => b.userId === user.id);
+                const totalProfit = bets.reduce((s, b) => s + (b.profit || 0), 0);
+                const pendingBets = (appData.pendingBets || []).filter(b => b.userId === user.id);
+
+                return `
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>👤 ${user.name} (${user.id})</span>
+                        <button class="btn btn-outline btn-sm" id="btnLogout">🚪 خروج</button>
+                    </div>
+                    <div class="balance-big">💰 موجودی: ${formatMoney(user.balance)}</div>
+                    <p style="text-align:center;">سود/زیان کل: <b style="color:${totalProfit>=0?'#2ecc71':'#e74c3c'}">${formatMoney(totalProfit)}</b></p>
+                </div>
+
+                <div class="card">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="dashboard">📊 بازی‌ها</button>
+                        <button class="tab-btn" data-tab="history">📋 تاریخچه</button>
+                    </div>
+                    <div class="tab-content active" id="tab-dashboard">
+                        ${openMatches.length > 0 ? `
+                        <h3>🟢 بازی جاری</h3>
+                        ${openMatches.map(m => `
+                        <div class="card" style="margin-bottom:12px;">
+                            <b>${m.team1} ${getFlag(m.team1)} vs ${m.team2} ${getFlag(m.team2)}</b>
+                            <p>${m.time} | ضرایب: ${m.team1} ${m.odds1}x, ${m.team2} ${m.odds2}x</p>
+                            <label>مبلغ شرط (حداقل ۱۰,۰۰۰ تومان):</label>
+                            <input type="number" id="betAmount_${m.id}" min="10000" step="1000" value="10000">
+                            <select id="betTeam_${m.id}">
+                                <option value="">انتخاب تیم...</option>
+                                <option value="${m.team1}">${m.team1} (${m.odds1}x)</option>
+                                <option value="${m.team2}">${m.team2} (${m.odds2}x)</option>
+                            </select>
+                            <button class="btn btn-gold" onclick="placeBet(${m.id})">ثبت شرط</button>
+                            <p style="font-size:0.8em;">✨ در صورت عدم انتخاب، سیستم تیم با ضریب کمتر را ثبت می‌کند.</p>
+                        </div>`).join('')}
+                        ` : '<p>هیچ بازی جاری‌ای وجود ندارد.</p>'}
+
+                        ${upcomingMatches.length > 0 ? `
+                        <h3>🔵 بازی‌های پیش‌رو</h3>
+                        ${upcomingMatches.map(m => `
+                        <div class="card">
+                            <b>${m.team1} ${getFlag(m.team1)} vs ${m.team2} ${getFlag(m.team2)}</b>
+                            <p>${m.time} | ضرایب: ${m.team1} ${m.odds1}x, ${m.team2} ${m.odds2}x</p>
+                        </div>`).join('')}
+                        ` : ''}
+                    </div>
+
+                    <div class="tab-content" id="tab-history">
+                        <h3>📋 شرط‌های من</h3>
+                        ${bets.length === 0 ? '<p>شرطی ثبت نشده.</p>' : `
+                        <table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>ضریب</th><th>نتیجه</th><th>سود/زیان</th></tr></thead><tbody>
+                        ${bets.map(b => {
+                            const m = getMatchById(b.matchId);
+                            let resultBadge = '';
+                            if (b.result === 'win') resultBadge = '<span class="badge badge-win">برد</span>';
+                            else if (b.result === 'lose') resultBadge = '<span class="badge badge-lose">باخت</span>';
+                            else if (b.type === 'auto') resultBadge = '<span class="badge badge-auto">خودکار ⚡</span>';
+                            else resultBadge = '<span class="badge badge-pending">در انتظار</span>';
+                            return `<tr>
+                                <td>${m ? m.team1 + ' ' + getFlag(m.team1) + ' vs ' + m.team2 + ' ' + getFlag(m.team2) : '?'}</td>
+                                <td>${b.team} ${getFlag(b.team)}</td>
+                                <td>${formatMoney(b.amount)}</td>
+                                <td>${b.odds}x</td>
+                                <td>${resultBadge}</td>
+                                <td style="color:${b.result==='win'?'#2ecc71':b.result==='lose'?'#e74c3c':'#f1c40f'}">${b.result ? formatMoney(b.profit) : '---'}</td>
+                            </tr>`;
+                        }).join('')}
+                        </tbody></table>`}
+                        ${pendingBets.length > 0 ? `
+                        <h4>🕒 شرط‌های در انتظار تأیید</h4>
+                        <table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody>
+                        ${pendingBets.map(pb => {
+                            const m = getMatchById(pb.matchId);
+                            return `<tr>
+                                <td>${m ? m.team1 + ' vs ' + m.team2 : '?'}</td>
+                                <td>${pb.team} ${getFlag(pb.team)}</td>
+                                <td>${formatMoney(pb.amount)}</td>
+                                <td><span class="badge badge-pending">در انتظار تأیید</span></td>
+                            </tr>`;
+                        }).join('')}
+                        </tbody></table>` : ''}
+                    </div>
+                </div>`;
+            }
+
+            function attachUserEvents() {
+                document.getElementById('btnLogout').onclick = logout;
+                document.querySelectorAll('.tab-btn').forEach(b => b.onclick = function() {
+                    document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+                    b.classList.add('active');
+                    document.getElementById('tab-' + b.dataset.tab).classList.add('active');
+                });
+            }
+
+            // ---------- PLACE BET (USER) ----------
+            window.placeBet = function(matchId) {
+                if (!currentUser) return;
+                const amount = parseInt(document.getElementById('betAmount_' + matchId).value);
+                const team = document.getElementById('betTeam_' + matchId).value;
+                if (!team) return alert('لطفاً یک تیم انتخاب کنید.');
+                if (isNaN(amount) || amount < 10000) return alert('حداقل شرط ۱۰,۰۰۰ تومان است.');
+                const user = getUserById(currentUser.id);
+                const maxBet = user.balance <= 0 ? 10000 : user.balance;
+                if (amount > maxBet) return alert(`حداکثر مبلغ شرط شما ${formatMoney(maxBet)} است.`);
+
+                if (!appData.pendingBets) appData.pendingBets = [];
+                appData.pendingBets.push({
+                    userId: user.id,
+                    matchId: matchId,
+                    team: team,
+                    amount: amount / 1000, // تبدیل به هزار تومان
+                    odds: getMatchById(matchId)['odds' + (team === getMatchById(matchId).team1 ? '1' : '2')]
+                });
+                saveData(appData);
+                alert('✅ شرط شما ثبت و در انتظار تأیید ادمین است.');
+                renderApp();
+            };
+
+            // ---------- ADMIN PANEL ----------
+            function renderAdminPanel() {
+                const matchesByStatus = {
+                    open: appData.matches.filter(m => m.status === 'open'),
+                    upcoming: appData.matches.filter(m => m.status === 'upcoming'),
+                    closed: appData.matches.filter(m => m.status === 'closed')
+                };
+
+                const sortedUsers = [...appData.users].sort((a, b) => {
+                    if (b.balance !== a.balance) return b.balance - a.balance;
+                    const aWins = appData.bets.filter(bet => bet.userId === a.id && bet.result === 'win').length;
+                    const bWins = appData.bets.filter(bet => bet.userId === b.id && bet.result === 'win').length;
+                    return bWins - aWins;
+                });
+
+                return `
+                <div class="card">
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>👑 ادمین</span>
+                        <button class="btn btn-outline btn-sm" id="btnLogout">🚪 خروج</button>
+                    </div>
+                    <p>💰 صندوق: <b>${formatMoney(appData.casinoBalance)}</b></p>
+                </div>
+
+                <div class="card">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="overview">📊 نمای کلی</button>
+                        <button class="tab-btn" data-tab="matches">⚽ مدیریت بازی‌ها</button>
+                        <button class="tab-btn" data-tab="users">👥 کاربران</button>
+                        <button class="tab-btn" data-tab="history">📋 تاریخچه</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-overview">
+                        <h3>رتبه‌بندی</h3>
+                        <table><thead><tr><th>رتبه</th><th>نام</th><th>موجودی</th><th>برد</th></tr></thead><tbody>
+                        ${sortedUsers.map((u, i) => `
+                            <tr><td>${i+1}</td><td>${u.name}</td><td>${formatMoney(u.balance)}</td><td>${appData.bets.filter(b => b.userId === u.id && b.result === 'win').length}</td></tr>
+                        `).join('')}
+                        </tbody></table>
+                        ${matchesByStatus.open.length > 0 ? `<h3>🟢 بازی‌های جاری</h3>${matchesByStatus.open.map(m => `<p>${m.team1} ${getFlag(m.team1)} vs ${m.team2} ${getFlag(m.team2)}</p>`).join('')}` : ''}
+                    </div>
+
+                    <div class="tab-content" id="tab-matches">
+                        <h3>➕ ساخت بازی جدید با ضرایب خودکار</h3>
+                        <input type="text" id="newTeam1" placeholder="تیم اول">
+                        <input type="text" id="newTeam2" placeholder="تیم دوم">
+                        <input type="number" id="prob1" placeholder="احتمال برد تیم اول (مثلاً ۶۰)">
+                        <input type="number" id="prob2" placeholder="احتمال برد تیم دوم (مثلاً ۲۰)">
+                        <input type="text" id="matchTime" placeholder="زمان بازی (مثلاً ۲۲:۳۰ - ۱۰ تیر)">
+                        <button class="btn btn-gold" id="btnAutoOdds">🧮 محاسبه ضرایب و ایجاد بازی</button>
+                        <p style="font-size:0.8em;">❗ قوانین: مارجین ۱۰٪، مضرب ۰.۵، حداقل ۱.۵ برای ≤۵۰٪، قانون ۱.۱</p>
+
+                        ${matchesByStatus.open.length > 0 ? `
+                        <h3>📌 بستن بازی جاری</h3>
+                        ${matchesByStatus.open.map(m => `
+                        <div class="card">
+                            <b>${m.team1} ${getFlag(m.team1)} vs ${m.team2} ${getFlag(m.team2)}</b>
+                            <select id="winnerSelect_${m.id}">
+                                <option value="">انتخاب برنده...</option>
+                                <option value="${m.team1}">${m.team1}</option>
+                                <option value="${m.team2}">${m.team2}</option>
+                            </select>
+                            <button class="btn btn-gold" onclick="closeMatch(${m.id})">بستن بازی و تسویه</button>
+                        </div>`).join('')}` : ''}
+                    </div>
+
+                    <div class="tab-content" id="tab-users">
+                        <h3>👥 مدیریت کاربران</h3>
+                        ${appData.users.map(u => `
+                        <div class="card">
+                            <b>${u.name} (${u.id})</b> - موجودی: ${formatMoney(u.balance)}
+                            <input type="number" id="addBalance_${u.id}" placeholder="مبلغ افزایش/کاهش (هزار تومان)">
+                            <button class="btn btn-outline" onclick="adjustBalance('${u.id}')">اعمال</button>
+                        </div>`).join('')}
+                        <h3>🕒 شرط‌های در انتظار تأیید</h3>
+                        ${(appData.pendingBets || []).length === 0 ? '<p>موردی نیست.</p>' : `
+                        <table><thead><tr><th>کاربر</th><th>بازی</th><th>تیم</th><th>مبلغ</th><th>عملیات</th></tr></thead><tbody>
+                        ${appData.pendingBets.map((pb, idx) => {
+                            const u = getUserById(pb.userId);
+                            const m = getMatchById(pb.matchId);
+                            return `<tr>
+                                <td>${u ? u.name : '?'}</td>
+                                <td>${m ? m.team1 + ' vs ' + m.team2 : '?'}</td>
+                                <td>${pb.team}</td>
+                                <td>${formatMoney(pb.amount)}</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm" onclick="approveBet(${idx})">✅ تأیید</button>
+                                    <button class="btn btn-outline btn-sm" onclick="rejectBet(${idx})">❌ رد</button>
+                                </td>
+                            </tr>`;
+                        }).join('')}
+                        </tbody></table>`}
+                    </div>
+
+                    <div class="tab-content" id="tab-history">
+                        <h3>📋 همه شرط‌ها</h3>
+                        <table><thead><tr><th>کاربر</th><th>بازی</th><th>تیم</th><th>مبلغ</th><th>نتیجه</th><th>سود</th></tr></thead><tbody>
+                        ${appData.bets.map(b => {
+                            const u = getUserById(b.userId);
+                            const m = getMatchById(b.matchId);
+                            return `<tr>
+                                <td>${u ? u.name : '?'}</td>
+                                <td>${m ? m.team1 + ' vs ' + m.team2 : '?'}</td>
+                                <td>${b.team}</td>
+                                <td>${formatMoney(b.amount)}</td>
+                                <td>${b.result ? b.result : (b.type === 'auto' ? 'خودکار ⚡' : 'در انتظار')}</td>
+                                <td>${b.result ? formatMoney(b.profit) : '---'}</td>
+                            </tr>`;
+                        }).join('')}
+                        </tbody></table>
+                    </div>
+                </div>`;
+            }
+
+            function attachAdminEvents() {
+                document.getElementById('btnLogout').onclick = logout;
+                document.querySelectorAll('.tab-btn').forEach(b => b.onclick = function() {
+                    document.querySelectorAll('.tab-btn').forEach(x => x.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(x => x.classList.remove('active'));
+                    b.classList.add('active');
+                    document.getElementById('tab-' + b.dataset.tab).classList.add('active');
+                });
+
+                document.getElementById('btnAutoOdds').onclick = () => {
+                    const t1 = document.getElementById('newTeam1').value.trim();
+                    const t2 = document.getElementById('newTeam2').value.trim();
+                    const p1 = parseFloat(document.getElementById('prob1').value);
+                    const p2 = parseFloat(document.getElementById('prob2').value);
+                    const time = document.getElementById('matchTime').value.trim();
+                    if (!t1 || !t2 || isNaN(p1) || isNaN(p2) || !time) return alert('همه فیلدها را پر کنید.');
+
+                    const sum = p1 + p2;
+                    const r1 = p1 / sum, r2 = p2 / sum;
+                    let odds1, odds2;
+                    if (p1 <= 50 && p2 <= 50) { odds1 = 1.5; odds2 = 1.5; }
+                    else if (p1 <= 50) { odds1 = 1.5; odds2 = 1 / (1.1 - 1/1.5); }
+                    else if (p2 <= 50) { odds2 = 1.5; odds1 = 1 / (1.1 - 1/1.5); }
+                    else { odds1 = 1.1; odds2 = 1.1; }
+
+                    odds1 = Math.ceil(odds1 * 2) / 2;
+                    odds2 = Math.ceil(odds2 * 2) / 2;
+                    if (odds1 <= 1.0) odds1 = 1.1;
+                    if (odds2 <= 1.0) odds2 = 1.1;
+
+                    const newMatch = {
+                        id: appData.matches.length + 1,
+                        team1: t1, team2: t2,
+                        odds1: odds1, odds2: odds2,
+                        result: null, status: 'open', time: time
+                    };
+                    appData.matches.push(newMatch);
+                    saveData(appData);
+                    alert(`✅ بازی جدید ایجاد شد!\n${t1}: ${odds1}x\n${t2}: ${odds2}x`);
+                    renderApp();
+                };
+            }
+
+            // ---------- ADMIN ACTIONS (global) ----------
+            window.closeMatch = function(matchId) {
+                const winner = document.getElementById('winnerSelect_' + matchId).value;
+                if (!winner) return alert('برنده را انتخاب کنید.');
+                const match = getMatchById(matchId);
+                if (!match || match.status !== 'open') return;
+                match.result = winner;
+                match.status = 'closed';
+
+                appData.bets.forEach(bet => {
+                    if (bet.matchId === matchId && bet.result === null) {
+                        bet.result = bet.team === winner ? 'win' : 'lose';
+                        bet.profit = bet.result === 'win' ? Math.round(bet.amount * bet.odds - bet.amount) : -bet.amount;
+                    }
+                });
+
+                appData.users.forEach(u => {
+                    const bets = appData.bets.filter(b => b.userId === u.id && b.matchId === matchId);
+                    bets.forEach(b => { u.balance += b.profit || 0; });
+                });
+                const totalCasino = appData.bets
+                    .filter(b => b.matchId === matchId)
+                    .reduce((s, b) => s + (b.amount - (b.result === 'win' ? b.amount * b.odds : 0)), 0);
+                appData.casinoBalance += totalCasino;
+
+                saveData(appData);
+                alert('✅ بازی بسته شد و حساب‌ها تسویه گردید.');
+                renderApp();
+            };
+
+            window.adjustBalance = function(userId) {
+                const amount = parseInt(document.getElementById('addBalance_' + userId).value);
+                if (isNaN(amount)) return alert('مبلغ را وارد کنید.');
+                const user = getUserById(userId);
+                if (!user) return;
+                user.balance += amount;
+                appData.bets.push({
+                    userId: userId,
+                    matchId: null,
+                    team: '---',
+                    amount: Math.abs(amount),
+                    odds: 0,
+                    result: amount >= 0 ? 'افزایش موجودی' : 'کاهش موجودی',
+                    profit: amount,
+                    type: 'admin'
+                });
+                saveData(appData);
+                alert(`✅ موجودی ${user.name} به ${formatMoney(user.balance)} تغییر یافت.`);
+                renderApp();
+            };
+
+            window.approveBet = function(index) {
+                const pb = appData.pendingBets[index];
+                if (!pb) return;
+                appData.bets.push({
+                    userId: pb.userId,
+                    matchId: pb.matchId,
+                    team: pb.team,
+                    amount: pb.amount,
+                    odds: pb.odds,
+                    result: null,
+                    profit: 0,
+                    type: 'manual'
+                });
+                appData.pendingBets.splice(index, 1);
+                saveData(appData);
+                alert('✅ شرط تأیید شد.');
+                renderApp();
+            };
+
+            window.rejectBet = function(index) {
+                appData.pendingBets.splice(index, 1);
+                saveData(appData);
+                alert('❌ شرط رد شد.');
+                renderApp();
+            };
+
+            function logout() { currentUser = null; renderApp(); }
+
+            // شروع
+            renderApp();
+        })();
+    </script>
+</body>
+</html>
