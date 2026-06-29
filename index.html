@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 کازینوی خانوادگی | محمدمهدی</title>
+    <style>
+        :root {
+            --bg: #0a0a14;
+            --surface: #141428;
+            --surface2: #1e1e36;
+            --gold: #d4a843;
+            --gold-light: #f0d68a;
+            --text: #f0e6d2;
+            --text-secondary: #b0a48e;
+            --border: #2a2a44;
+            --radius: 16px;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Tahoma', 'Segoe UI', 'Iranian Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(212, 168, 67, 0.8) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: floatUp linear infinite;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+        .app-container { width: 100%; max-width: 520px; animation: fadeSlide 0.5s ease; position: relative; z-index: 1; }
+        .app-container.wide { max-width: 1100px; }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 28px 24px;
+            box-shadow: var(--shadow); position: relative; margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .card:hover { box-shadow: 0 0 20px rgba(212, 168, 67, 0.5), var(--shadow); }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        h1 {
+            font-size: 1.8em; color: var(--gold-light); text-align: center; margin-bottom: 8px;
+            text-shadow: 0 0 15px rgba(212, 168, 67, 0.4); animation: glowPulse 2s infinite alternate;
+        }
+        @keyframes glowPulse {
+            from { text-shadow: 0 0 10px rgba(212, 168, 67, 0.3); }
+            to { text-shadow: 0 0 25px rgba(212, 168, 67, 0.7); }
+        }
+        h2 { font-size: 1.3em; color: var(--gold); margin-bottom: 16px; }
+        h3 { font-size: 1.1em; color: var(--gold-light); margin-bottom: 12px; }
+        .footer-text { text-align: center; font-size: 0.75em; color: var(--text-secondary); margin-top: 20px; opacity: 0.8; z-index: 1; }
+        .gold-text { color: var(--gold-light); font-weight: bold; }
+        .balance-big {
+            font-size: 2.2em; font-weight: bold; color: var(--gold-light);
+            text-align: center; letter-spacing: 2px; text-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
+        }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; color: var(--text-secondary); font-size: 0.9em; }
+        input, select {
+            width: 100%; padding: 14px 16px; background: var(--surface2);
+            border: 1px solid var(--border); border-radius: 12px; color: var(--text);
+            font-size: 1em; font-family: inherit; transition: all 0.3s ease; outline: none;
+        }
+        input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212, 168, 67, 0.3); }
+        .btn {
+            display: inline-block; padding: 14px 24px; border: none; border-radius: 12px;
+            font-size: 1em; font-family: inherit; cursor: pointer; font-weight: bold;
+            transition: all 0.3s ease; text-align: center;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #c8963e, #d4a843); color: #1a1a0a;
+            box-shadow: 0 6px 20px rgba(212, 168, 67, 0.4); width: 100%;
+        }
+        .btn-gold:hover { box-shadow: 0 8px 30px rgba(212, 168, 67, 0.7); transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-outline:hover { background: rgba(212, 168, 67, 0.1); }
+        .btn-sm { padding: 8px 16px; font-size: 0.85em; border-radius: 10px; }
+        .table-wrapper { overflow-x: auto; margin: 12px 0; border-radius: 12px; background: rgba(0, 0, 0, 0.2); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85em; white-space: nowrap; }
+        th, td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--border); }
+        th { background: var(--surface2); color: var(--gold); font-weight: bold; }
+        tr:hover td { background: rgba(212, 168, 67, 0.08); }
+        .badge {
+            display: inline-block; padding: 5px 12px; border-radius: 20px;
+            font-size: 0.75em; font-weight: bold;
+        }
+        .badge-active { background: rgba(39, 174, 96, 0.25); color: #2ecc71; animation: pulse 2s infinite; }
+        .badge-upcoming { background: rgba(41, 128, 185, 0.25); color: #5dade2; }
+        .badge-closed { background: rgba(160, 160, 160, 0.2); color: #999; }
+        .badge-win { background: rgba(39, 174, 96, 0.3); color: #2ecc71; }
+        .badge-lose { background: rgba(192, 57, 43, 0.3); color: #e74c3c; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+        .flex-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .flex-row>* { flex: 1; min-width: 140px; }
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 12px; } .mt-2 { margin-top: 20px; }
+        .calc-box {
+            background: var(--surface2); border: 2px dashed var(--border);
+            border-radius: var(--radius); padding: 20px; margin: 14px 0; text-align: center;
+        }
+        .highlight-box {
+            border-color: var(--gold); box-shadow: 0 0 20px rgba(212, 168, 67, 0.3);
+            background: rgba(212, 168, 67, 0.05);
+        }
+        .header-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 12px; margin-bottom: 18px;
+            border-bottom: 1px solid var(--border); padding-bottom: 12px;
+        }
+        .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; border-bottom: 2px solid var(--border); }
+        .tab-btn {
+            padding: 10px 18px; background: transparent; border: none;
+            color: var(--text-secondary); cursor: pointer; font-family: inherit;
+            font-size: 0.9em; border-radius: 10px 10px 0 0; transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            color: var(--gold-light); font-weight: bold;
+            background: rgba(212, 168, 67, 0.12); box-shadow: inset 0 -3px 0 var(--gold);
+        }
+        .tab-content { display: none; animation: fadeSlide 0.4s ease; }
+        .tab-content.active { display: block; }
+        .match-time {
+            display: inline-block; background: rgba(212, 168, 67, 0.2);
+            color: var(--gold-light); padding: 4px 12px; border-radius: 20px;
+            font-size: 0.8em; margin-bottom: 8px;
+        }
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .card { padding: 20px 16px; }
+            h1 { font-size: 1.5em; }
+            .balance-big { font-size: 1.8em; }
+            .btn { padding: 12px 18px; font-size: 0.9em; }
+            .flex-row>* { min-width: 100%; }
+            .tab-btn { padding: 8px 12px; font-size: 0.8em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="app-container" id="appContainer"></div>
+    <div class="footer-text">طراح محمدمهدی | نسخه ۱.۰ | ۱۴۰۵</div>
+    <script>
+        (function() {
+            function createParticles() {
+                const container = document.getElementById('particles');
+                for (let i = 0; i < 30; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    const s = Math.random() * 6 + 2;
+                    p.style.width = s + 'px';
+                    p.style.height = s + 'px';
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.animationDuration = Math.random() * 10 + 10 + 's';
+                    p.style.animationDelay = Math.random() * 5 + 's';
+                    container.appendChild(p);
+                }
+            }
+            createParticles();
+
+            const STORAGE_KEY = 'casinoFamilyV10';
+            const DEFAULT_DATA = {
+                users: [
+                    { id: 'rez', name: 'رضا', password: '1234', balance: 5 },
+                    { id: 'sep', name: 'سپیده', password: '5678', balance: 5 },
+                    { id: 'rey', name: 'ریحانه', password: '1111', balance: 5 },
+                    { id: 'sha', name: 'شایان', password: '2222', balance: -10 }
+                ],
+                bets: [
+                    { userId: 'rez', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5 },
+                    { userId: 'sep', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5 },
+                    { userId: 'rey', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5 },
+                    { userId: 'sha', matchId: 1, team: 'آفریقای جنوبی', amount: 10, odds: 2.0, result: 'lose', profit: -10 }
+                ],
+                matches: [
+                    { id: 1, team1: 'کانادا', team2: 'آفریقای جنوبی', odds1: 1.5, odds2: 2.0, result: 'کانادا', status: 'closed', time: '۲۲:۳۰ - ۷ تیر' },
+                    { id: 2, team1: 'برزیل', team2: 'ژاپن', odds1: 1.5, odds2: 2.0, result: null, status: 'open', time: '۲۰:۳۰ - ۸ تیر' },
+                    { id: 3, team1: 'آلمان', team2: 'پاراگوئه', odds1: 1.1, odds2: 5.0, result: null, status: 'upcoming', time: '۰۰:۰۰ - ۹ تیر' },
+                    { id: 4, team1: 'هلند', team2: 'مراکش', odds1: 1.5, odds2: 2.0, result: null, status: 'upcoming', time: '۰۴:۳۰ - ۹ تیر' }
+                ],
+                casinoBalance: -5
+            };
+
+            const countryFlags = {
+                'کانادا': '🇨🇦', 'آفریقای جنوبی': '🇿🇦', 'برزیل': '🇧🇷', 'ژاپن': '🇯🇵',
+                'آلمان': '🇩🇪', 'پاراگوئه': '🇵🇾', 'هلند': '🇳🇱', 'مراکش': '🇲🇦',
+                'آرژانتین': '🇦🇷', 'فرانسه': '🇫🇷', 'اسپانیا': '🇪🇸', 'پرتغال': '🇵🇹',
+                'ایتالیا': '🇮🇹', 'انگلیس': '🏴󠁧󠁢󠁥󠁮󠁧󠁿', 'بلژیک': '🇧🇪', 'کرواسی': '🇭🇷',
+                'سنگال': '🇸🇳', 'غنا': '🇬🇭', 'کامرون': '🇨🇲', 'تونس': '🇹🇳',
+                'نیجریه': '🇳🇬', 'مصر': '🇪🇬', 'عربستان': '🇸🇦', 'قطر': '🇶🇦',
+                'ایران': '🇮🇷', 'کره جنوبی': '🇰🇷', 'استرالیا': '🇦🇺', 'آمریکا': '🇺🇸',
+                'مکزیک': '🇲🇽', 'کاستاریکا': '🇨🇷', 'اروگوئه': '🇺🇾', 'اکوادور': '🇪🇨',
+                'سوئیس': '🇨🇭', 'صربستان': '🇷🇸', 'لهستان': '🇵🇱', 'دانمارک': '🇩🇰',
+                'سوئد': '🇸🇪', 'نروژ': '🇳🇴', 'روسیه': '🇷🇺', 'اوکراین': '🇺🇦',
+                'ترکیه': '🇹🇷', 'یونان': '🇬🇷'
+            };
+            function getFlag(c) { return countryFlags[c] || '🏳️'; }
+
+            function loadData() {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    try { return JSON.parse(raw); } catch (e) {}
+                }
+                saveData(DEFAULT_DATA);
+                return JSON.parse(JSON.stringify(DEFAULT_DATA));
+            }
+            function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
+
+            let appData = loadData();
+            let currentUser = null;
+
+            function getUserById(id) { return appData.users.find(u => u.id === id); }
+            function getMatchById(id) { return appData.matches.find(m => m.id === id); }
+            function userBets(userId) { return appData.bets.filter(b => b.userId === userId); }
+
+            function formatMoney(v) {
+                const absV = Math.abs(v);
+                const sign = v < 0 ? '−' : '';
+                if (absV >= 1000) {
+                    const millions = (absV / 1000);
+                    const formatted = millions % 1 === 0 ? millions.toLocaleString('fa-IR') : millions.toLocaleString('fa-IR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+                    return sign + formatted + ' میلیون تومان';
+                } else {
+                    return sign + absV.toLocaleString('fa-IR') + ' هزار تومان';
+                }
+            }
+
+            function renderApp() {
+                const container = document.getElementById('appContainer');
+                if (!currentUser) {
+                    container.classList.remove('wide');
+                    container.innerHTML = renderLogin();
+                    attachLoginEvents();
+                } else if (currentUser.id === 'admin') {
+                    container.classList.add('wide');
+                    container.innerHTML = renderAdminPanel();
+                    attachAdminEvents();
+                    switchTab('overview');
+                } else {
+                    container.classList.remove('wide');
+                    container.innerHTML = renderUserPanel();
+                    attachUserEvents();
+                    switchTab('dashboard');
+                }
+            }
+
+            function renderLogin() {
+                return `
+                <div class="card">
+                  <h1>🎰 کازینوی خانوادگی</h1>
+                  <p style="text-align:center;color:var(--text-secondary);margin-bottom:20px;">لطفاً نام کاربری و رمز خود را وارد کنید</p>
+                  <div class="form-group">
+                    <label>👤 نام کاربری</label>
+                    <input type="text" id="loginUsername" placeholder="نام کاربری" autocomplete="off">
+                  </div>
+                  <div class="form-group">
+                    <label>🔒 رمز عبور</label>
+                    <input type="password" id="loginPassword" inputmode="numeric" pattern="[0-9]*" placeholder="رمز عددی" autocomplete="off">
+                  </div>
+                  <button class="btn btn-gold" id="btnLoginUser">🚪 ورود کاربر</button>
+                  <button class="btn btn-outline mt-1" id="btnAdminLogin" style="width:100%;">👑 ورود ادمین</button>
+                </div>`;
+            }
+
+            function attachLoginEvents() {
+                document.getElementById('btnLoginUser').addEventListener('click', () => {
+                    const uid = document.getElementById('loginUsername').value.trim().toLowerCase();
+                    const pwd = document.getElementById('loginPassword').value.trim();
+                    if (!uid || !pwd) { alert('لطفاً هر دو فیلد را پر کنید.'); return; }
+                    const user = appData.users.find(u => u.id === uid && u.password === pwd);
+                    if (user) { currentUser = user; renderApp(); }
+                    else alert('❌ نام کاربری یا رمز عبور اشتباه است.');
+                });
+                document.getElementById('btnAdminLogin').addEventListener('click', () => {
+                    const pass = prompt('رمز عبور ادمین (۱۲ رقمی):');
+                    if (pass === '123123456') { currentUser = { id: 'admin', name: 'ادمین', role: 'admin' }; renderApp(); }
+                    else alert('❌ رمز ادمین نادرست است.');
+                });
+            }
+
+            function renderUserPanel() {
+                const user = getUserById(currentUser.id);
+                if (!user) { logout(); return ''; }
+                const openMatches = appData.matches.filter(m => m.status === 'open');
+                const upcomingMatches = appData.matches.filter(m => m.status === 'upcoming');
+                const bets = userBets(user.id);
+                const totalProfit = bets.reduce((s, b) => s + b.profit, 0);
+                return `
+                <div class="card">
+                  <div class="header-bar">
+                    <span style="color:var(--gold-light);font-weight:bold;">👤 ${user.name} (${user.id})</span>
+                    <button class="btn btn-outline btn-sm" id="btnLogout">🚪 خروج</button>
+                  </div>
+                  <div class="balance-big">💰 موجودی: ${formatMoney(user.balance)}</div>
+                  <div class="text-center" style="color:var(--text-secondary);">سود/زیان کل: <b style="color:${totalProfit>=0?'#2ecc71':'#e74c3c'}">${formatMoney(totalProfit)}</b></div>
+                </div>
+                <div class="card">
+                  <div class="tabs">
+                    <button class="tab-btn active" data-tab="dashboard">📊 بازی‌ها</button>
+                    <button class="tab-btn" data-tab="history">📋 تاریخچه</button>
+                  </div>
+                  <div class="tab-content active" id="tab-dashboard">
+                    ${openMatches.length > 0 ? renderOpenMatchSection(openMatches) : '<p style="text-align:center;color:var(--text-secondary);">هیچ بازی جاری‌ای وجود ندارد.</p>'}
+                    ${upcomingMatches.length > 0 ? renderUpcomingMatches(upcomingMatches) : ''}
+                    <p style="font-size:0.8em;color:var(--text-secondary);text-align:center;margin-top:14px;">📌 برای ثبت شرط، تیم و مبلغ را به ادمین اعلام کنید.</p>
+                  </div>
+                  <div class="tab-content" id="tab-history">
+                    <h3>📋 شرط‌های من</h3>
+                    ${bets.length === 0 ? '<p>شرطی ثبت نشده.</p>' : `
+                    <div class="table-wrapper"><table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>ضریب</th><th>نتیجه</th><th>سود/زیان</th></tr></thead><tbody>
+                    ${bets.map(b => {
+                      const m = getMatchById(b.matchId);
+                      return `<tr><td>${m ? m.team1 + ' ' + getFlag(m.team1) + ' vs ' + m.team2 + ' ' + getFlag(m.team2) : '?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatMoney(b.amount)}</td><td>${b.odds}x</td>
+                      <td><span class="badge ${b.result==='win'?'badge-win':'badge-lose'}">${b.result==='win'?'برد':'باخت'}</span></td>
+                      <td style="color:${b.profit>=0?'#2ecc71':'#e74c3c'}">${formatMoney(b.profit)}</td></tr>`;
+                    }).join('')}
+                    </tbody></table></div>`}
+                  </div>
+                </div>`;
+            }
+
+            function renderOpenMatchSection(openMatches) {
+                // برجسته‌ترین بازی جاری (اولین بازی)
+                const match = openMatches[0];
+                return `
+                <div class="calc-box highlight-box">
+                  <span class="match-time">⏰ ${match.time}</span>
+                  <h3>⚽ ${match.team1} ${getFlag(match.team1)} vs ${match.team2} ${getFlag(match.team2)}</h3>
+                  <div class="flex-row" style="margin:14px 0;">
+                    <div><span class="gold-text">${match.team1} ${getFlag(match.team1)}: ${match.odds1}x</span></div>
+                    <div><span class="gold-text">${match.team2} ${getFlag(match.team2)}: ${match.odds2}x</span></div>
+                  </div>
+                  <div class="form-group">
+                    <label>💵 مبلغ شرط (هزار تومان)</label>
+                    <input type="number" id="calcAmount" min="1" step="1" value="1" style="text-align:center;">
+                  </div>
+                  <div class="flex-row" style="margin-top:10px;">
+                    <div>🔹 سود ${match.team1}: <b id="calcProfit1">${formatMoney(0)}</b></div>
+                    <div>🔸 سود ${match.team2}: <b id="calcProfit2">${formatMoney(0)}</b></div>
+                  </div>
+                </div>`;
+            }
+
+            function renderUpcomingMatches(upcomingMatches) {
+                return `
+                <h3 class="mt-2">🔵 بازی‌های پیش‌رو</h3>
+                ${upcomingMatches.map(m => `
+                <div class="calc-box">
+                  <span class="match-time">⏰ ${m.time}</span>
+                  <div><b>${m.team1} ${getFlag(m.team1)}</b> (${m.odds1}x) vs <b>${m.team2} ${getFlag(m.team2)}</b> (${m.odds2}x)</div>
+                </div>`).join('')}`;
+            }
+
+            function attachUserEvents() {
+                document.getElementById('btnLogout')?.addEventListener('click', logout);
+                document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                }));
+                const amtInput = document.getElementById('calcAmount');
+                const openMatches = appData.matches.filter(m => m.status === 'open');
+                if (amtInput && openMatches.length > 0) {
+                    const match = openMatches[0];
+                    const update = () => {
+                        const a = parseInt(amtInput.value) || 0;
+                        document.getElementById('calcProfit1').textContent = formatMoney(Math.round(a * match.odds1 - a));
+                        document.getElementById('calcProfit2').textContent = formatMoney(Math.round(a * match.odds2 - a));
+                    };
+                    amtInput.addEventListener('input', update);
+                    update();
+                }
+            }
+
+            function renderAdminPanel() {
+                const matchesByStatus = {
+                    open: appData.matches.filter(m => m.status === 'open'),
+                    upcoming: appData.matches.filter(m => m.status === 'upcoming'),
+                    closed: appData.matches.filter(m => m.status === 'closed')
+                };
+                return `
+                <div class="card">
+                  <div class="header-bar">
+                    <span>👑 ادمین (مدیر کل)</span>
+                    <button class="btn btn-outline btn-sm" id="btnLogout">🚪 خروج</button>
+                  </div>
+                  <div class="flex-row" style="text-align:center;">
+                    <div>💰 صندوق: <b style="color:${appData.casinoBalance>=0?'#2ecc71':'#e74c3c'}">${formatMoney(appData.casinoBalance)}</b></div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="tabs">
+                    <button class="tab-btn active" data-tab="overview">📊 نمای کلی</button>
+                    <button class="tab-btn" data-tab="history">📋 تاریخچه</button>
+                  </div>
+                  <div class="tab-content active" id="tab-overview">
+                    <h3>👥 کاربران</h3>
+                    <div class="table-wrapper"><table><thead><tr><th>نام</th><th>یوزر</th><th>موجودی</th><th>شرط‌ها</th></tr></thead><tbody>
+                    ${appData.users.map(u => `<tr><td>${u.name}</td><td>${u.id}</td><td>${formatMoney(u.balance)}</td><td>${appData.bets.filter(b=>b.userId===u.id).length}</td></tr>`).join('')}
+                    </tbody></table></div>
+
+                    ${matchesByStatus.open.length > 0 ? `
+                    <h3 class="mt-2">🟢 بازی‌های جاری</h3>
+                    ${matchesByStatus.open.map(m => `<div class="calc-box highlight-box"><span class="match-time">⏰ ${m.time}</span><br><b>${m.team1} ${getFlag(m.team1)}</b> (${m.odds1}x) vs <b>${m.team2} ${getFlag(m.team2)}</b> (${m.odds2}x)</div>`).join('')}` : ''}
+
+                    ${matchesByStatus.upcoming.length > 0 ? `
+                    <h3 class="mt-2">🔵 بازی‌های پیش‌رو</h3>
+                    ${matchesByStatus.upcoming.map(m => `<div class="calc-box"><span class="match-time">⏰ ${m.time}</span><br><b>${m.team1} ${getFlag(m.team1)}</b> (${m.odds1}x) vs <b>${m.team2} ${getFlag(m.team2)}</b> (${m.odds2}x)</div>`).join('')}` : ''}
+
+                    ${matchesByStatus.closed.length > 0 ? `
+                    <h3 class="mt-2">⚫ بازی‌های گذشته</h3>
+                    ${matchesByStatus.closed.map(m => `<div class="calc-box"><span class="match-time">⏰ ${m.time}</span><br><b>${m.team1} ${getFlag(m.team1)}</b> (${m.odds1}x) vs <b>${m.team2} ${getFlag(m.team2)}</b> (${m.odds2}x) - نتیجه: ${m.result}</div>`).join('')}` : ''}
+                  </div>
+                  <div class="tab-content" id="tab-history">
+                    <h3>📋 همه شرط‌ها</h3>
+                    <div class="table-wrapper"><table><thead><tr><th>کاربر</th><th>بازی</th><th>تیم</th><th>مبلغ</th><th>ضریب</th><th>نتیجه</th><th>سود</th></tr></thead><tbody>
+                    ${appData.bets.map(b => {
+                      const u = getUserById(b.userId); const m = getMatchById(b.matchId);
+                      return `<tr><td>${u?u.name:'?'}</td><td>${m?m.team1+' '+getFlag(m.team1)+' vs '+m.team2+' '+getFlag(m.team2):'?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatMoney(b.amount)}</td><td>${b.odds}x</td>
+                      <td><span class="badge ${b.result==='win'?'badge-win':b.result==='lose'?'badge-lose':'badge-active'}">${b.result==='win'?'برد':b.result==='lose'?'باخت':'در انتظار'}</span></td>
+                      <td style="color:${b.profit>=0?'#2ecc71':'#e74c3c'}">${formatMoney(b.profit)}</td></tr>`;
+                    }).join('')}
+                    </tbody></table></div>
+                  </div>
+                </div>`;
+            }
+
+            function attachAdminEvents() {
+                document.getElementById('btnLogout')?.addEventListener('click', logout);
+                document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                }));
+            }
+
+            function switchTab(tabName) {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector(`.tab-btn[data-tab="${tabName}"]`)?.classList.add('active');
+                document.getElementById(`tab-${tabName}`)?.classList.add('active');
+            }
+
+            function logout() { currentUser = null; renderApp(); }
+
+            renderApp();
+        })();
+    </script>
+</body>
+</html>
