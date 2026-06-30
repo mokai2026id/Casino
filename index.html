@@ -40,7 +40,6 @@
         .balance-big { font-size: 2.2em; font-weight: bold; text-align: center; letter-spacing: 2px; }
         .balance-big.positive { color: var(--gold-light); }
         .balance-big.negative { color: #e74c3c; }
-        .debt-label { font-size: 0.8em; margin-right: 4px; }
         input, select {
             width: 100%; padding: 14px; background: var(--surface2);
             border: 1px solid var(--border); border-radius: 12px; color: var(--text);
@@ -122,7 +121,6 @@
         .modal-box p, .modal-box li { font-size: 0.95em; line-height: 1.8; margin-bottom: 8px; }
         .modal-box ul { padding-right: 20px; margin-bottom: 12px; }
 
-        /* استایل جدید کارت تیم */
         .team-card {
             background: var(--surface2);
             border: 1px solid var(--border);
@@ -188,7 +186,7 @@
             const VERSION_KEY = 'casinoDataVersion';
             const SESSION_KEY = 'casinoLoggedInUser';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 24;
+            const DATA_VERSION = 27;
 
             const DEFAULT_DATA = {
                 users: [
@@ -212,17 +210,20 @@
                     { userId: 'rez', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
-                    // New bets for Shayan
                     { userId: 'شایان', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
                     { userId: 'شایان', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
-                    { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' }
+                    { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' },
+                    { userId: 'rey', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    // New bets
+                    { userId: 'sep', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'rez', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' }
                 ],
                 matches: [
                     { id: 1, team1: 'کانادا', team2: 'آفریقای جنوبی', odds1: 1.5, odds2: 2.0, result: 'کانادا', resultDetail: '۱-۰', status: 'closed', time: '۲۲:۳۰ - ۷ تیر' },
                     { id: 2, team1: 'برزیل', team2: 'ژاپن', odds1: 2.0, odds2: 1.5, result: 'برزیل', resultDetail: '۲-۱', status: 'closed', time: '۲۰:۳۰ - ۸ تیر' },
                     { id: 3, team1: 'آلمان', team2: 'پاراگوئه', odds1: 1.1, odds2: 5.0, result: 'پاراگوئه', resultDetail: '۱-۱ (پنالتی ۴-۳ پاراگوئه)', status: 'closed', time: '۰۰:۰۰ - ۹ تیر' },
                     { id: 4, team1: 'هلند', team2: 'مراکش', odds1: 1.5, odds2: 2.0, result: 'مراکش', resultDetail: '۱-۱ (پنالتی ۳-۲ مراکش)', status: 'closed', time: '۰۴:۳۰ - ۹ تیر' },
-                    { id: 5, team1: 'ساحل عاج', team2: 'نروژ', odds1: 2.0, odds2: 1.5, result: null, resultDetail: null, status: 'open', time: '۲۰:۳۰ - ۹ تیر' },
+                    { id: 5, team1: 'نروژ', team2: 'ساحل عاج', odds1: 1.5, odds2: 2.0, result: null, resultDetail: null, status: 'open', time: '۲۰:۳۰ - ۹ تیر' },
                     { id: 6, team1: 'فرانسه', team2: 'سوئد', odds1: 1.1, odds2: 5.0, result: null, resultDetail: null, status: 'upcoming', time: '۰:۳۰ - ۱۰ تیر' },
                     { id: 7, team1: 'مکزیک', team2: 'اکوادور', odds1: 1.5, odds2: 2.0, result: null, resultDetail: null, status: 'upcoming', time: '۴:۳۰ - ۱۰ تیر' }
                 ],
@@ -300,7 +301,6 @@
             function getUserById(id) { return appData.users.find(u => u.id === id); }
             function getMatchById(id) { return appData.matches.find(m => m.id === id); }
 
-            // تابع کمکی برای ساخت کارت بازی (دو مربع)
             function renderMatchCard(m, showResult = false) {
                 const team1Card = `
                     <div class="team-card">
