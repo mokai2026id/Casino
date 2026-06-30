@@ -186,14 +186,14 @@
             const VERSION_KEY = 'casinoDataVersion';
             const SESSION_KEY = 'casinoLoggedInUser';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 28;
+            const DATA_VERSION = 29;
 
             const DEFAULT_DATA = {
                 users: [
-                    { id: 'rez', name: 'رضا', password: '1234', balance: -5 },
-                    { id: 'sep', name: 'سپیده', password: '5678', balance: -5 },
-                    { id: 'rey', name: 'ریحانه', password: '1111', balance: -10 },
-                    { id: 'شایان', name: 'شایان', password: '2222', balance: -40 }
+                    { id: 'rez', name: 'رضا', password: '1234', balance: 0 },
+                    { id: 'sep', name: 'سپیده', password: '5678', balance: 0 },
+                    { id: 'rey', name: 'ریحانه', password: '1111', balance: -5 },
+                    { id: 'شایان', name: 'شایان', password: '2222', balance: -35 }
                 ],
                 bets: [
                     { userId: 'rez', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
@@ -210,17 +210,15 @@
                     { userId: 'rez', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
-                    { userId: 'شایان', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'شایان', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
                     { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' },
-                    { userId: 'rey', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
-                    { userId: 'sep', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
-                    { userId: 'rez', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
-                    // New bets for Game 6 (France vs Sweden)
+                    { userId: 'rey', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'sep', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'rez', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'rez', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
                     { userId: 'rey', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
                     { userId: 'sep', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
-                    // New bets for Game 7 (Mexico vs Ecuador)
                     { userId: 'rez', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' },
                     { userId: 'rey', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
                     { userId: 'sep', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' }
@@ -230,11 +228,11 @@
                     { id: 2, team1: 'برزیل', team2: 'ژاپن', odds1: 2.0, odds2: 1.5, result: 'برزیل', resultDetail: '۲-۱', status: 'closed', time: '۲۰:۳۰ - ۸ تیر' },
                     { id: 3, team1: 'آلمان', team2: 'پاراگوئه', odds1: 1.1, odds2: 5.0, result: 'پاراگوئه', resultDetail: '۱-۱ (پنالتی ۴-۳ پاراگوئه)', status: 'closed', time: '۰۰:۰۰ - ۹ تیر' },
                     { id: 4, team1: 'هلند', team2: 'مراکش', odds1: 1.5, odds2: 2.0, result: 'مراکش', resultDetail: '۱-۱ (پنالتی ۳-۲ مراکش)', status: 'closed', time: '۰۴:۳۰ - ۹ تیر' },
-                    { id: 5, team1: 'نروژ', team2: 'ساحل عاج', odds1: 1.5, odds2: 2.0, result: null, resultDetail: null, status: 'open', time: '۲۰:۳۰ - ۹ تیر' },
+                    { id: 5, team1: 'نروژ', team2: 'ساحل عاج', odds1: 1.5, odds2: 2.0, result: 'نروژ', resultDetail: '۲-۱', status: 'closed', time: '۲۰:۳۰ - ۹ تیر' },
                     { id: 6, team1: 'فرانسه', team2: 'سوئد', odds1: 1.1, odds2: 5.0, result: null, resultDetail: null, status: 'upcoming', time: '۰:۳۰ - ۱۰ تیر' },
                     { id: 7, team1: 'مکزیک', team2: 'اکوادور', odds1: 1.5, odds2: 2.0, result: null, resultDetail: null, status: 'upcoming', time: '۴:۳۰ - ۱۰ تیر' }
                 ],
-                casinoBalance: 60
+                casinoBalance: 40
             };
 
             const countryFlags = {
@@ -264,7 +262,7 @@
             function showVersionAlert() {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = 'version-alert';
-                alertDiv.innerHTML = '✨ بازی‌های جدید اضافه شدند – اطلاعات به‌روز شد';
+                alertDiv.innerHTML = '✨ اطلاعات به‌روز شد – نتیجه بازی نروژ ثبت گردید';
                 document.body.prepend(alertDiv);
                 setTimeout(() => alertDiv.remove(), 5000);
             }
