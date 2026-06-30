@@ -188,7 +188,7 @@
             const VERSION_KEY = 'casinoDataVersion';
             const SESSION_KEY = 'casinoLoggedInUser';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 23;
+            const DATA_VERSION = 24;
 
             const DEFAULT_DATA = {
                 users: [
@@ -211,7 +211,11 @@
                     { userId: 'شایان', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rez', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
-                    { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' }
+                    { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
+                    // New bets for Shayan
+                    { userId: 'شایان', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' }
                 ],
                 matches: [
                     { id: 1, team1: 'کانادا', team2: 'آفریقای جنوبی', odds1: 1.5, odds2: 2.0, result: 'کانادا', resultDetail: '۱-۰', status: 'closed', time: '۲۲:۳۰ - ۷ تیر' },
