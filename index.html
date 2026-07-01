@@ -158,8 +158,9 @@
             const STORAGE_KEY = 'casinoFamilyV10';
             const VERSION_KEY = 'casinoDataVersion';
             const SESSION_KEY = 'casinoLoggedInUser';
+            const AUTO_LOGIN_KEY = 'casinoAutoLogin';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 35;
+            const DATA_VERSION = 36;
 
             const DEFAULT_DATA = {
                 users: [
@@ -252,7 +253,8 @@
                     localStorage.removeItem(STORAGE_KEY);
                     localStorage.removeItem(VERSION_KEY);
                     localStorage.removeItem(DAILY_CLEAR_KEY);
-                    sessionStorage.removeItem(SESSION_KEY);
+                    localStorage.removeItem(AUTO_LOGIN_KEY);
+                    localStorage.removeItem(SESSION_KEY);
                     localStorage.setItem(DAILY_CLEAR_KEY, today);
                     location.reload();
                 }
@@ -262,12 +264,13 @@
             let appData = loadData();
             let currentUser = null;
 
-            const savedSession = sessionStorage.getItem(SESSION_KEY);
-            if (savedSession && !currentUser) {
-                if (savedSession === 'admin') {
+            // ورود خودکار در صورت بسته شدن تب (تا وقتی خروج نزده)
+            const savedAutoLogin = localStorage.getItem(AUTO_LOGIN_KEY);
+            if (savedAutoLogin && !currentUser) {
+                if (savedAutoLogin === 'admin') {
                     currentUser = { id: 'admin', name: 'ادمین' };
                 } else {
-                    const found = appData.users.find(u => u.id === savedSession);
+                    const found = appData.users.find(u => u.id === savedAutoLogin);
                     if (found) currentUser = found;
                 }
             }
@@ -339,7 +342,7 @@
                     const user = appData.users.find(u => u.id === uid && u.password === pwd);
                     if (user) {
                         currentUser = user;
-                        sessionStorage.setItem(SESSION_KEY, user.id);
+                        localStorage.setItem(AUTO_LOGIN_KEY, user.id);
                         renderApp();
                     } else alert('❌ نام کاربری یا رمز اشتباه است.');
                 };
@@ -353,7 +356,7 @@
                     const pass = document.getElementById('adminPassInput').value.trim();
                     if (pass === '123123456') {
                         currentUser = { id: 'admin', name: 'ادمین' };
-                        sessionStorage.setItem(SESSION_KEY, 'admin');
+                        localStorage.setItem(AUTO_LOGIN_KEY, 'admin');
                         document.getElementById('adminPassModal').classList.remove('active');
                         renderApp();
                     } else {
@@ -520,7 +523,7 @@
 
             function logout() {
                 currentUser = null;
-                sessionStorage.removeItem(SESSION_KEY);
+                localStorage.removeItem(AUTO_LOGIN_KEY);
                 renderApp();
             }
 
