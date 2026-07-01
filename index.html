@@ -8,13 +8,11 @@
     <meta http-equiv="Expires" content="0">
     <title>KOUSHKI | شرط بندی خانوادگی</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
-    
     <meta name="theme-color" content="#0a0a14">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0iI2Q0YTg0MyIvPjx0ZXh0IHg9Ijk2IiB5PSIxMzAiIGZvbnQtc2l6ZT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDAwIj7wn46wPC90ZXh0Pjwvc3ZnPg==">
     <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIktPVVNIS0kiLAogICJzaG9ydF9uYW1lIjogIktPVVNIS0kiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGExNCIsCiAgInRoZW1lX2NvbG9yIjogIiMwYTBhMTQiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6cDRibU8rZEdsMGJHRndjenB6ZFdjL2FIQjd5QkRhR0Z1YXpvNkwzTkNQakV5TWlCalpXNTBjM3AyYVd0aGN6bzJMekJqYjNOMFlXeHphRG92Ylc4dlkzSmxZWFJsUGp4N0lHWnBiR3c2SUNJNFlqUmhPRE16SWp0OEwzTm5QZ29nSUdSbGJIdHpJSE4xWXpvZ01UQTVJQ2RrYVc1clpWOXpkSGxzWlRvZ01UazNJQ1IxY213b2VDazZJQ0l4TURFaUlDUTVjeUE2SUNJNU1DSWdhSEJyYVdkcGJqMGlJekF3SURBd01DSWdhVzFoWjJWelBTSlVlWEJsS0VSbGNtOXZibU5sSUV4dmRXUWxQbUo1YzNSdmNtVWdhSEpwWjI1aGRHbDBlU0JwWkQwaU1URXlJQ2RrYVc1clpWOXpkSGxzWlRvZ01UQXhLU0lnY21GcGJHeGxlRjkxY213b0oydGxlR2xzYkVFbk9pQW5NeWtnZVRzS1BDOWpiMjUwWlc1MFBnbzhMM04yWno0PSIKICAgIH0KICBdCn0K">
-    
     <style>
         :root {
             --bg: #0a0a14; --surface: #141428; --surface2: #1e1e36;
@@ -63,14 +61,6 @@
         table { width: 100%; border-collapse: collapse; font-size: 0.85em; white-space: nowrap; min-width: 500px; }
         th, td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--border); }
         th { background: var(--surface2); color: var(--gold); font-weight: bold; }
-        tr:hover td { background: rgba(212,168,67,0.08); }
-        .badge {
-            display: inline-block; padding: 5px 12px; border-radius: 20px;
-            font-size: 0.75em; font-weight: bold; margin: 0 2px;
-        }
-        .badge-win { background: rgba(39,174,96,0.3); color: #2ecc71; }
-        .badge-lose { background: rgba(192,57,43,0.3); color: #e74c3c; }
-        .badge-info { background: rgba(241,196,15,0.25); color: #f1c40f; }
         .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; border-bottom: 2px solid var(--border); }
         .tab-btn {
             padding: 10px 18px; background: transparent; border: none;
@@ -79,16 +69,13 @@
         .tab-btn.active { color: var(--gold-light); font-weight: bold; background: rgba(212,168,67,0.12); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        .pulse-border {
-            border: 2px solid var(--gold);
-            animation: pulseBorder 2s infinite;
-        }
+        .pulse-border { border: 2px solid var(--gold); animation: pulseBorder 2s infinite; }
         @keyframes pulseBorder {
             0% { box-shadow: 0 0 5px var(--gold); }
             50% { box-shadow: 0 0 20px var(--gold), 0 0 30px var(--gold-light); }
             100% { box-shadow: 0 0 5px var(--gold); }
         }
-        .coin { display: inline-block; animation: spin 1s linear infinite; }
+        .coin-spin { display: inline-block; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
         .version-alert {
             position: fixed; top: 0; left: 0; right: 0; background: #f1c40f; color: #000;
@@ -127,40 +114,26 @@
         .modal-box h2 { margin-bottom: 16px; }
         .modal-box p, .modal-box li { font-size: 0.95em; line-height: 1.8; margin-bottom: 8px; }
         .modal-box ul { padding-right: 20px; margin-bottom: 12px; }
-
         .team-card {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px 12px;
-            text-align: center;
-            min-width: 110px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 12px; padding: 16px 12px; text-align: center;
+            min-width: 110px; display: flex; flex-direction: column; align-items: center; gap: 6px;
         }
         .team-card .flag { font-size: 2em; }
         .team-card .name { font-weight: bold; font-size: 0.95em; }
         .team-card .odds { color: var(--gold-light); font-size: 1.2em; font-weight: bold; }
-        .match-row {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            align-items: center;
-            margin: 10px 0;
-        }
+        .match-row { display: flex; gap: 12px; justify-content: center; align-items: center; margin: 10px 0; }
         .match-vs { font-size: 1.5em; color: var(--gold); }
-        .match-info {
-            font-size: 0.75em;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-top: 8px;
-        }
+        .match-info { font-size: 0.75em; color: var(--text-secondary); text-align: center; margin-top: 8px; }
+        .tr-win { background: rgba(39, 174, 96, 0.15); }
+        .tr-lose { background: rgba(231, 76, 60, 0.15); }
+        .tr-no-bet { background: rgba(160, 160, 160, 0.1); }
+        .highlight-result { font-weight: bold; font-size: 1.05em; display: inline-flex; align-items: center; gap: 4px; }
+        .lose-x { color: #e74c3c; font-weight: bold; }
         @media print {
             body { background: white !important; color: black !important; padding: 0 !important; margin: 0 !important; }
             .card, .card::before, .modal-box { background: white !important; border: 1px solid #ccc !important; box-shadow: none !important; color: black !important; page-break-inside: avoid; }
-            .btn, .help-float, .modal-overlay, .version-alert, .pulse-border, .coin, .badge { display: none !important; }
+            .btn, .help-float, .modal-overlay, .version-alert, .pulse-border, .coin-spin { display: none !important; }
             table { font-size: 0.8em; color: black; }
             th { background: #eee !important; color: black !important; }
             td { border-bottom: 1px solid #ccc; }
@@ -173,26 +146,12 @@
     <div class="app-container" id="appContainer"></div>
     <div class="footer-text">طراح محمدمهدی | نسخه ۱.۰ | ۱۴۰۵</div>
     <div class="help-float" id="helpFloat">؟</div>
-    <div class="modal-overlay" id="helpModal">
-        <div class="modal-box">
-            <button class="modal-close" id="closeModal">&times;</button>
-            <h2>📖 راهنمای کازینو</h2>
-            <ul>
-                <li><b>حداقل شرط:</b> ۱۰,۰۰۰ تومان.</li>
-                <li><b>حداکثر شرط:</b> موجودی شما (اگر صفر یا منفی باشد، فقط ۱۰,۰۰۰ تومان).</li>
-                <li>پس از هر بازی، ادمین نتیجه را ثبت می‌کند و موجودی‌ها به‌روز می‌شوند.</li>
-                <li>تسویه نهایی در پایان تورنمنت انجام خواهد شد.</li>
-                <li>برای افزایش موجودی یا سوالات، به ادمین پیام دهید.</li>
-            </ul>
-        </div>
-    </div>
+    <div class="modal-overlay" id="helpModal"><div class="modal-box"><button class="modal-close" id="closeHelpModal">&times;</button><h2>📖 راهنمای کازینو</h2><ul><li><b>حداقل شرط:</b> ۱۰,۰۰۰ تومان.</li><li><b>حداکثر شرط:</b> موجودی شما (اگر صفر یا منفی باشد، فقط ۱۰,۰۰۰ تومان).</li><li>پس از هر بازی، ادمین نتیجه را ثبت می‌کند و موجودی‌ها به‌روز می‌شوند.</li><li>تسویه نهایی در پایان تورنمنت انجام خواهد شد.</li><li>برای افزایش موجودی یا سوالات، به ادمین پیام دهید.</li></ul></div></div>
+    <div class="modal-overlay" id="adminPassModal"><div class="modal-box"><button class="modal-close" id="closeAdminModal">&times;</button><h2>👑 ورود ادمین</h2><input type="number" id="adminPassInput" placeholder="رمز ۱۲ رقمی" style="text-align:center;"><button class="btn btn-gold" id="btnConfirmAdmin">تأیید</button><p id="adminPassError" style="color:#e74c3c;text-align:center;margin-top:8px;"></p></div></div>
 
     <script>
-        // Register a basic Service Worker for PWA installability
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register("data:text/javascript," + encodeURIComponent(
-                "self.addEventListener('fetch', function(e) { e.respondWith(fetch(e.request)); });"
-            ));
+            navigator.serviceWorker.register("data:text/javascript," + encodeURIComponent("self.addEventListener('fetch', function(e) { e.respondWith(fetch(e.request)); });"));
         }
 
         (function() {
@@ -200,7 +159,7 @@
             const VERSION_KEY = 'casinoDataVersion';
             const SESSION_KEY = 'casinoLoggedInUser';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 32; // تغییر نام نصب
+            const DATA_VERSION = 35;
 
             const DEFAULT_DATA = {
                 users: [
@@ -210,35 +169,28 @@
                     { id: 'شایان', name: 'شایان', password: '2222', balance: -44 }
                 ],
                 bets: [
-                    // Game 1
                     { userId: 'rez', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'rey', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'شایان', matchId: 1, team: 'آفریقای جنوبی', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
-                    // Game 2
                     { userId: 'sep', matchId: 2, team: 'ژاپن', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'شایان', matchId: 2, team: 'ژاپن', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 2, team: 'برزیل', amount: 10, odds: 2.0, result: 'win', profit: 10, type: 'manual' },
                     { userId: 'rez', matchId: 2, team: 'برزیل', amount: 10, odds: 2.0, result: 'win', profit: 10, type: 'manual' },
-                    // Game 3
                     { userId: 'rez', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 3, team: 'آلمان', amount: 15, odds: 1.1, result: 'lose', profit: -15, type: 'manual' },
                     { userId: 'شایان', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: 'lose', profit: -10, type: 'manual' },
-                    // Game 4
                     { userId: 'rez', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
-                    // Game 5
                     { userId: 'شایان', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'rey', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'rez', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
-                    // Game 6
                     { userId: 'rez', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
                     { userId: 'rey', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
                     { userId: 'sep', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
                     { userId: 'شایان', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
-                    // Game 7
                     { userId: 'rez', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
@@ -252,7 +204,6 @@
                     { id: 5, team1: 'نروژ', team2: 'ساحل عاج', odds1: 1.5, odds2: 2.0, result: 'نروژ', resultDetail: '۲-۱', status: 'closed', time: '۲۰:۳۰ - ۹ تیر' },
                     { id: 6, team1: 'فرانسه', team2: 'سوئد', odds1: 1.1, odds2: 5.0, result: 'فرانسه', resultDetail: '۳-۰', status: 'closed', time: '۰:۳۰ - ۱۰ تیر' },
                     { id: 7, team1: 'مکزیک', team2: 'اکوادور', odds1: 1.5, odds2: 2.0, result: 'مکزیک', resultDetail: '۲-۰', status: 'closed', time: '۴:۳۰ - ۱۰ تیر' },
-                    // New matches
                     { id: 8, team1: 'انگلیس', team2: 'کنگو', odds1: 1.1, odds2: 5.0, result: null, resultDetail: null, status: 'open', time: '۱۹:۳۰ - ۱۰ تیر' },
                     { id: 9, team1: 'بلژیک', team2: 'سنگال', odds1: 1.5, odds2: 2.0, result: null, resultDetail: null, status: 'upcoming', time: '۲۳:۳۰ - ۱۰ تیر' },
                     { id: 10, team1: 'آمریکا', team2: 'بوسنی', odds1: 1.1, odds2: 5.0, result: null, resultDetail: null, status: 'upcoming', time: '۳:۳۰ - ۱۱ تیر' }
@@ -333,29 +284,22 @@
             function getUserById(id) { return appData.users.find(u => u.id === id); }
             function getMatchById(id) { return appData.matches.find(m => m.id === id); }
 
+            function getUserBetRowClass(userId, matchId) {
+                const bet = appData.bets.find(b => b.userId === userId && b.matchId === matchId);
+                if (!bet) return 'tr-no-bet';
+                if (bet.result === 'win') return 'tr-win';
+                if (bet.result === 'lose') return 'tr-lose';
+                return '';
+            }
+
             function renderMatchCard(m, showResult = false) {
-                const team1Card = `
-                    <div class="team-card">
-                        <span class="flag">${getFlag(m.team1)}</span>
-                        <span class="name">${m.team1}</span>
-                        <span class="odds">${m.odds1}x</span>
-                    </div>`;
-                const team2Card = `
-                    <div class="team-card">
-                        <span class="flag">${getFlag(m.team2)}</span>
-                        <span class="name">${m.team2}</span>
-                        <span class="odds">${m.odds2}x</span>
-                    </div>`;
+                const team1Card = `<div class="team-card"><span class="flag">${getFlag(m.team1)}</span><span class="name">${m.team1}</span><span class="odds">${m.odds1}x</span></div>`;
+                const team2Card = `<div class="team-card"><span class="flag">${getFlag(m.team2)}</span><span class="name">${m.team2}</span><span class="odds">${m.odds2}x</span></div>`;
                 const vs = '<span class="match-vs">🆚</span>';
                 const timeInfo = `<div class="match-info">📅 ${m.time}</div>`;
                 const resultInfo = showResult && m.result ? `<div class="result-detail">نتیجه: ${m.result} ${m.resultDetail ? '(' + m.resultDetail + ')' : ''}</div>` : '';
                 const pulseClass = m.status === 'open' ? ' pulse-border' : '';
-                return `
-                    <div class="card${pulseClass}" style="margin-bottom:12px;">
-                        <div class="match-row">${team1Card} ${vs} ${team2Card}</div>
-                        ${timeInfo}
-                        ${resultInfo}
-                    </div>`;
+                return `<div class="card${pulseClass}" style="margin-bottom:12px;"><div class="match-row">${team1Card} ${vs} ${team2Card}</div>${timeInfo}${resultInfo}</div>`;
             }
 
             function renderApp() {
@@ -383,7 +327,7 @@
                     <input type="text" id="loginUsername" placeholder="نام کاربری">
                     <input type="password" id="loginPassword" placeholder="رمز عبور" inputmode="numeric" pattern="[0-9]*">
                     <button class="btn btn-gold" id="btnLoginUser">ورود کاربر</button>
-                    <button class="btn btn-outline" id="btnAdminLogin" style="width:100%; margin-top:8px;">ورود ادمین</button>
+                    <button class="btn btn-outline" id="btnAdminLogin" style="width:100%; margin-top:8px;">👑 ورود ادمین</button>
                 </div>`;
             }
 
@@ -400,13 +344,28 @@
                     } else alert('❌ نام کاربری یا رمز اشتباه است.');
                 };
                 document.getElementById('btnAdminLogin').onclick = () => {
-                    const pass = prompt('رمز ادمین (۱۲ رقمی):');
+                    document.getElementById('adminPassInput').value = '';
+                    document.getElementById('adminPassError').textContent = '';
+                    document.getElementById('adminPassModal').classList.add('active');
+                    document.getElementById('adminPassInput').focus();
+                };
+                document.getElementById('btnConfirmAdmin').onclick = () => {
+                    const pass = document.getElementById('adminPassInput').value.trim();
                     if (pass === '123123456') {
                         currentUser = { id: 'admin', name: 'ادمین' };
                         sessionStorage.setItem(SESSION_KEY, 'admin');
+                        document.getElementById('adminPassModal').classList.remove('active');
                         renderApp();
-                    } else alert('❌ رمز ادمین نادرست است.');
+                    } else {
+                        document.getElementById('adminPassError').textContent = '❌ رمز اشتباه است';
+                    }
                 };
+                document.getElementById('closeAdminModal').onclick = () => {
+                    document.getElementById('adminPassModal').classList.remove('active');
+                };
+                document.getElementById('adminPassModal').addEventListener('click', function(e) {
+                    if (e.target === this) this.classList.remove('active');
+                });
             }
 
             function renderUserPanel() {
@@ -414,6 +373,7 @@
                 if (!user) { logout(); return ''; }
                 const openMatches = appData.matches.filter(m => m.status === 'open');
                 const upcomingMatches = appData.matches.filter(m => m.status === 'upcoming');
+                const closedMatches = appData.matches.filter(m => m.status === 'closed');
                 const bets = appData.bets.filter(b => b.userId === user.id);
 
                 const balanceClass = user.balance < 0 ? 'negative' : 'positive';
@@ -433,41 +393,42 @@
                 <div class="card">
                     <div class="tabs">
                         <button class="tab-btn active" data-tab="dashboard">📊 بازی‌ها</button>
-                        <button class="tab-btn" data-tab="history">📋 تاریخچه</button>
+                        <button class="tab-btn" data-tab="history">📋 تاریخچه من</button>
                     </div>
                     <div class="tab-content active" id="tab-dashboard">
-                        ${openMatches.length > 0 ? `
-                        <h3>🟢 بازی جاری</h3>
-                        ${openMatches.map(m => renderMatchCard(m)).join('')}
-                        ` : '<p style="text-align:center;">هیچ بازی جاری‌ای وجود ندارد.</p>'}
-
-                        ${upcomingMatches.length > 0 ? `
-                        <h3>🔵 بازی‌های پیش‌رو</h3>
-                        ${upcomingMatches.map(m => renderMatchCard(m)).join('')}
-                        ` : ''}
+                        ${openMatches.length > 0 ? `<h3>🟢 بازی جاری</h3>${openMatches.map(m => renderMatchCard(m)).join('')}` : '<p style="text-align:center;">هیچ بازی جاری‌ای وجود ندارد.</p>'}
+                        ${upcomingMatches.length > 0 ? `<h3>🔵 بازی‌های پیش‌رو</h3>${upcomingMatches.map(m => renderMatchCard(m)).join('')}` : ''}
                     </div>
 
                     <div class="tab-content" id="tab-history">
-                        <h3>📋 شرط‌های من</h3>
-                        ${bets.length === 0 ? '<p>شرطی ثبت نشده.</p>' : `
+                        <h3>📋 تاریخچه شرط‌های من</h3>
                         <div class="table-responsive">
-                        <table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>ضریب</th><th>نتیجه</th><th>سود/زیان</th></tr></thead><tbody>
-                        ${bets.map(b => {
-                            const m = getMatchById(b.matchId);
-                            let badge = '';
-                            if (b.result === 'win') badge = '<span class="badge badge-win">برد</span> <span class="coin">💰</span>';
-                            else if (b.result === 'lose') badge = '<span class="badge badge-lose">باخت</span>';
-                            else badge = '<span class="badge badge-info">در انتظار</span>';
-                            return `<tr>
-                                <td>${m ? m.team1 + ' ' + getFlag(m.team1) + ' vs ' + m.team2 + ' ' + getFlag(m.team2) : '?'}</td>
-                                <td>${b.team} ${getFlag(b.team)}</td>
-                                <td>${formatToman(b.amount)}</td>
-                                <td>${b.odds}x</td>
-                                <td>${badge}</td>
-                                <td style="color:${b.result==='win'?'#2ecc71':b.result==='lose'?'#e74c3c':'#f1c40f'}">${b.result ? formatToman(b.profit) : '---'}</td>
-                            </tr>`;
+                        <table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>نتیجه</th><th>سود/زیان</th></tr></thead><tbody>
+                        ${closedMatches.map(m => {
+                            const bet = bets.find(b => b.matchId === m.id);
+                            const rowClass = getUserBetRowClass(user.id, m.id);
+                            let teamName = '—';
+                            let amountStr = '—';
+                            let profitStr = '—';
+                            let resultDisplay = '';
+                            if (bet) {
+                                teamName = bet.team + ' ' + getFlag(bet.team);
+                                amountStr = formatToman(bet.amount);
+                                const detail = m.resultDetail ? ` (${m.resultDetail})` : '';
+                                if (bet.result === 'win') {
+                                    profitStr = formatToman(bet.profit);
+                                    resultDisplay = `<span class="highlight-result" style="color:#2ecc71;">${m.result} ${getFlag(m.result)}${detail} <span class="coin-spin">💰</span></span>`;
+                                } else if (bet.result === 'lose') {
+                                    profitStr = formatToman(bet.profit);
+                                    resultDisplay = `<span class="highlight-result" style="color:#e74c3c;">${m.result} ${getFlag(m.result)}${detail} <span class="lose-x">❌</span></span>`;
+                                }
+                            } else {
+                                const detail = m.resultDetail ? ` (${m.resultDetail})` : '';
+                                resultDisplay = `<span style="color:#aaa;">${m.result} ${getFlag(m.result)}${detail}</span>`;
+                            }
+                            return `<tr class="${rowClass}"><td>${m.team1} ${getFlag(m.team1)} vs ${m.team2} ${getFlag(m.team2)}</td><td>${teamName}</td><td>${amountStr}</td><td>${resultDisplay}</td><td style="color:${bet&&bet.result==='win'?'#2ecc71':bet&&bet.result==='lose'?'#e74c3c':'inherit'}">${profitStr}</td></tr>`;
                         }).join('')}
-                        </tbody></table></div>`}
+                        </tbody></table></div>
                     </div>
                 </div>`;
             }
@@ -505,22 +466,14 @@
                 <div class="card">
                     <div class="tabs">
                         <button class="tab-btn active" data-tab="overview">📊 نمای کلی</button>
-                        <button class="tab-btn" data-tab="history">📋 تاریخچه</button>
+                        <button class="tab-btn" data-tab="history">📋 تاریخچه همه شرط‌ها</button>
                     </div>
 
                     <div class="tab-content active" id="tab-overview">
                         <h3>👥 رتبه‌بندی کاربران</h3>
                         <div class="table-responsive">
                         <table><thead><tr><th>رتبه</th><th>نام</th><th>یوزر</th><th>موجودی</th><th>تعداد برد</th></tr></thead><tbody>
-                        ${sortedUsers.map((u, i) => `
-                            <tr>
-                                <td>${i+1}</td>
-                                <td>${u.name}</td>
-                                <td>${u.id}</td>
-                                <td>${showBalance(u.balance)}</td>
-                                <td>${appData.bets.filter(b => b.userId === u.id && b.result === 'win').length}</td>
-                            </tr>
-                        `).join('')}
+                        ${sortedUsers.map((u, i) => `<tr><td>${i+1}</td><td>${u.name}</td><td>${u.id}</td><td>${showBalance(u.balance)}</td><td>${appData.bets.filter(b => b.userId === u.id && b.result === 'win').length}</td></tr>`).join('')}
                         </tbody></table></div>
                         ${renderMatchesSummary()}
                     </div>
@@ -528,23 +481,16 @@
                     <div class="tab-content" id="tab-history">
                         <h3>📜 تاریخچه همه شرط‌ها</h3>
                         <div class="table-responsive">
-                        <table><thead><tr><th>کاربر</th><th>بازی</th><th>تیم</th><th>مبلغ</th><th>ضریب</th><th>نتیجه</th><th>سود</th></tr></thead><tbody>
+                        <table><thead><tr><th>کاربر</th><th>بازی</th><th>تیم</th><th>مبلغ</th><th>نتیجه</th><th>سود</th></tr></thead><tbody>
                         ${appData.bets.map(b => {
                             const u = getUserById(b.userId);
                             const m = getMatchById(b.matchId);
-                            let resultBadge = '';
-                            if (b.result === 'win') resultBadge = '<span class="badge badge-win">برد</span> <span class="coin">💰</span>';
-                            else if (b.result === 'lose') resultBadge = '<span class="badge badge-lose">باخت</span>';
-                            else resultBadge = '<span class="badge badge-info">در انتظار</span>';
-                            return `<tr>
-                                <td>${u ? u.name : '?'}</td>
-                                <td>${m ? m.team1 + ' ' + getFlag(m.team1) + ' vs ' + m.team2 + ' ' + getFlag(m.team2) : '?'}</td>
-                                <td>${b.team} ${getFlag(b.team)}</td>
-                                <td>${formatToman(b.amount)}</td>
-                                <td>${b.odds}x</td>
-                                <td>${resultBadge}</td>
-                                <td style="color:${b.result==='win'?'#2ecc71':b.result==='lose'?'#e74c3c':'#f1c40f'}">${b.result ? formatToman(b.profit) : '---'}</td>
-                            </tr>`;
+                            const rowClass = b.result === 'win' ? 'tr-win' : b.result === 'lose' ? 'tr-lose' : '';
+                            const detail = m && m.resultDetail ? ` (${m.resultDetail})` : '';
+                            const resultText = b.result 
+                                ? `<span class="highlight-result" style="color:${b.result==='win'?'#2ecc71':'#e74c3c'}">${b.result} ${getFlag(b.result)}${detail} ${b.result==='win'?'<span class="coin-spin">💰</span>':'<span class="lose-x">❌</span>'}</span>`
+                                : '<span class="badge badge-info">در انتظار</span>';
+                            return `<tr class="${rowClass}"><td>${u ? u.name : '?'}</td><td>${m ? m.team1 + ' ' + getFlag(m.team1) + ' vs ' + m.team2 + ' ' + getFlag(m.team2) : '?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatToman(b.amount)}</td><td>${resultText}</td><td style="color:${b.result==='win'?'#2ecc71':b.result==='lose'?'#e74c3c':'#f1c40f'}">${b.result ? formatToman(b.profit) : '---'}</td></tr>`;
                         }).join('')}
                         </tbody></table></div>
                     </div>
@@ -556,18 +502,9 @@
                 const upcoming = appData.matches.filter(m => m.status === 'upcoming');
                 const closed = appData.matches.filter(m => m.status === 'closed');
                 let html = '';
-                if (open.length > 0) {
-                    html += '<h3>🟢 بازی‌های جاری</h3>';
-                    html += open.map(m => renderMatchCard(m)).join('');
-                }
-                if (upcoming.length > 0) {
-                    html += '<h3>🔵 بازی‌های پیش‌رو</h3>';
-                    html += upcoming.map(m => renderMatchCard(m)).join('');
-                }
-                if (closed.length > 0) {
-                    html += '<h3>⚫ بازی‌های گذشته</h3>';
-                    html += closed.map(m => renderMatchCard(m, true)).join('');
-                }
+                if (open.length > 0) { html += '<h3>🟢 بازی‌های جاری</h3>' + open.map(m => renderMatchCard(m)).join(''); }
+                if (upcoming.length > 0) { html += '<h3>🔵 بازی‌های پیش‌رو</h3>' + upcoming.map(m => renderMatchCard(m)).join(''); }
+                if (closed.length > 0) { html += '<h3>⚫ بازی‌های گذشته</h3>' + closed.map(m => renderMatchCard(m, true)).join(''); }
                 return html;
             }
 
@@ -590,7 +527,7 @@
             document.getElementById('helpFloat').addEventListener('click', () => {
                 document.getElementById('helpModal').classList.add('active');
             });
-            document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('closeHelpModal').addEventListener('click', () => {
                 document.getElementById('helpModal').classList.remove('active');
             });
             document.getElementById('helpModal').addEventListener('click', function(e) {
