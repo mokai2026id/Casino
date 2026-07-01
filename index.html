@@ -8,6 +8,14 @@
     <meta http-equiv="Expires" content="0">
     <title>🏆 کازینوی خانوادگی | محمدمهدی</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0a0a14">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0iI2Q0YTg0MyIvPjx0ZXh0IHg9Ijk2IiB5PSIxMzAiIGZvbnQtc2l6ZT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMDAwIj7wn46wPC90ZXh0Pjwvc3ZnPg==">
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIti5PCDZgtin24zZiNmGINmB2YTYp9iu2YTZhtinIiwKICAic2hvcnRfbmFtZSI6ICLYt9mFINin24zZiNmGIiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwYTBhMTQiLAogICJ0aGVtZV9jb2xvciI6ICIjMGExMGExNCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEhOMll5QjRiV3h1Y3pwNGJtTStkR2wwYkdGd2N6cHpkV2N0YUhUdHlCRGFHRnVhem82TDNOQ1BqRXlNaUJqWlc1MGN6cDJhV3RoY3pvMkx6QmpiM04wWVd4emFEb3ZiVzh2WTNKbFlYUmxQang3SUdacGJHdzZJQ0k0WWpSaE9EUXpJanQ4TDNOblBnb2dJR1JsYkh0eklITjFZem9nTVRBNUlDZGthVzVyWlY5emRIbHNaVG9nTVRrM0lDUjFjbXdvZUNrNklDSXhNREVpSUNSNWN5QTZJQ0k1TUNJZ2FIQnJhV2RwYmowaUl6QXdJQ0F3TUNJZ2FXMWhaMlZ6UFNKVWVYQmxLRVJsY205dmJuTWdRMnh2ZFdRcFBtSjVjM1J2Y21VZ2FISnBaMjVoZEdsMGVTQnBaRDBpTVRFMklDZGthVzVyWlY5emRIbHNaVG9nTVRBeEtTSWdjbUZwYkd4bGVGOTFjbXdvSjJ0bGVHbHNiRUVuT2lBbk15a2dlVHNLUEM5amIyNTBaVzUwUGdvOEwzTjJaejQ9IgogICAgfQogIF0KfQo=">
+    
     <style>
         :root {
             --bg: #0a0a14; --surface: #141428; --surface2: #1e1e36;
@@ -181,47 +189,61 @@
     </div>
 
     <script>
+        // Register a basic Service Worker for PWA installability
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register("data:text/javascript," + encodeURIComponent(
+                "self.addEventListener('fetch', function(e) { e.respondWith(fetch(e.request)); });"
+            ));
+        }
+
         (function() {
             const STORAGE_KEY = 'casinoFamilyV10';
             const VERSION_KEY = 'casinoDataVersion';
             const SESSION_KEY = 'casinoLoggedInUser';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 29;
+            const DATA_VERSION = 30; // نتایج جدید + PWA
 
             const DEFAULT_DATA = {
                 users: [
-                    { id: 'rez', name: 'رضا', password: '1234', balance: 0 },
-                    { id: 'sep', name: 'سپیده', password: '5678', balance: 0 },
-                    { id: 'rey', name: 'ریحانه', password: '1111', balance: -5 },
-                    { id: 'شایان', name: 'شایان', password: '2222', balance: -35 }
+                    { id: 'rez', name: 'رضا', password: '1234', balance: -9 },
+                    { id: 'sep', name: 'سپیده', password: '5678', balance: 6 },
+                    { id: 'rey', name: 'ریحانه', password: '1111', balance: 1 },
+                    { id: 'شایان', name: 'شایان', password: '2222', balance: -44 }
                 ],
                 bets: [
+                    // Game 1
                     { userId: 'rez', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'rey', matchId: 1, team: 'کانادا', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'شایان', matchId: 1, team: 'آفریقای جنوبی', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
+                    // Game 2
                     { userId: 'sep', matchId: 2, team: 'ژاپن', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'شایان', matchId: 2, team: 'ژاپن', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 2, team: 'برزیل', amount: 10, odds: 2.0, result: 'win', profit: 10, type: 'manual' },
                     { userId: 'rez', matchId: 2, team: 'برزیل', amount: 10, odds: 2.0, result: 'win', profit: 10, type: 'manual' },
+                    // Game 3
                     { userId: 'rez', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 3, team: 'آلمان', amount: 15, odds: 1.1, result: 'lose', profit: -15, type: 'manual' },
                     { userId: 'شایان', matchId: 3, team: 'آلمان', amount: 10, odds: 1.1, result: 'lose', profit: -10, type: 'manual' },
+                    // Game 4
                     { userId: 'rez', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rey', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'شایان', matchId: 4, team: 'هلند', amount: 10, odds: 1.5, result: 'lose', profit: -10, type: 'manual' },
+                    // Game 5 (Norway win)
                     { userId: 'شایان', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
-                    { userId: 'شایان', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
-                    { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' },
                     { userId: 'rey', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'rez', matchId: 5, team: 'نروژ', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
-                    { userId: 'rez', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
-                    { userId: 'rey', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
-                    { userId: 'sep', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
-                    { userId: 'rez', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: null, profit: 0, type: 'manual' },
-                    { userId: 'rey', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
-                    { userId: 'sep', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' }
+                    // Game 6 (France win)
+                    { userId: 'rez', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
+                    { userId: 'rey', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
+                    { userId: 'sep', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
+                    { userId: 'شایان', matchId: 6, team: 'فرانسه', amount: 10, odds: 1.1, result: 'win', profit: 1, type: 'manual' },
+                    // Game 7 (Mexico win)
+                    { userId: 'rez', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
+                    { userId: 'rey', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'sep', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
+                    { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' }
                 ],
                 matches: [
                     { id: 1, team1: 'کانادا', team2: 'آفریقای جنوبی', odds1: 1.5, odds2: 2.0, result: 'کانادا', resultDetail: '۱-۰', status: 'closed', time: '۲۲:۳۰ - ۷ تیر' },
@@ -229,10 +251,10 @@
                     { id: 3, team1: 'آلمان', team2: 'پاراگوئه', odds1: 1.1, odds2: 5.0, result: 'پاراگوئه', resultDetail: '۱-۱ (پنالتی ۴-۳ پاراگوئه)', status: 'closed', time: '۰۰:۰۰ - ۹ تیر' },
                     { id: 4, team1: 'هلند', team2: 'مراکش', odds1: 1.5, odds2: 2.0, result: 'مراکش', resultDetail: '۱-۱ (پنالتی ۳-۲ مراکش)', status: 'closed', time: '۰۴:۳۰ - ۹ تیر' },
                     { id: 5, team1: 'نروژ', team2: 'ساحل عاج', odds1: 1.5, odds2: 2.0, result: 'نروژ', resultDetail: '۲-۱', status: 'closed', time: '۲۰:۳۰ - ۹ تیر' },
-                    { id: 6, team1: 'فرانسه', team2: 'سوئد', odds1: 1.1, odds2: 5.0, result: null, resultDetail: null, status: 'upcoming', time: '۰:۳۰ - ۱۰ تیر' },
-                    { id: 7, team1: 'مکزیک', team2: 'اکوادور', odds1: 1.5, odds2: 2.0, result: null, resultDetail: null, status: 'upcoming', time: '۴:۳۰ - ۱۰ تیر' }
+                    { id: 6, team1: 'فرانسه', team2: 'سوئد', odds1: 1.1, odds2: 5.0, result: 'فرانسه', resultDetail: '۳-۰', status: 'closed', time: '۰:۳۰ - ۱۰ تیر' },
+                    { id: 7, team1: 'مکزیک', team2: 'اکوادور', odds1: 1.5, odds2: 2.0, result: 'مکزیک', resultDetail: '۲-۰', status: 'closed', time: '۴:۳۰ - ۱۰ تیر' }
                 ],
-                casinoBalance: 40
+                casinoBalance: 46
             };
 
             const countryFlags = {
@@ -262,7 +284,7 @@
             function showVersionAlert() {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = 'version-alert';
-                alertDiv.innerHTML = '✨ اطلاعات به‌روز شد – نتیجه بازی نروژ ثبت گردید';
+                alertDiv.innerHTML = '✨ نتایج جدید ثبت شد – فرانسه و مکزیک پیروز شدند';
                 document.body.prepend(alertDiv);
                 setTimeout(() => alertDiv.remove(), 5000);
             }
