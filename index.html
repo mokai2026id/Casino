@@ -159,7 +159,7 @@
             const VERSION_KEY = 'casinoDataVersion';
             const AUTO_LOGIN_KEY = 'casinoAutoLogin';
             const DAILY_CLEAR_KEY = 'casinoLastClearDate';
-            const DATA_VERSION = 40; // بسته شدن بازی انگلیس-کنگو
+            const DATA_VERSION = 42; // بازی جاری هوشمند + اینتر
 
             const DEFAULT_DATA = {
                 users: [
@@ -202,11 +202,21 @@
                     { userId: 'rey', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 7, team: 'مکزیک', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'شایان', matchId: 7, team: 'اکوادور', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
-                    // Game 8 (انگلیس vs کنگو) - نتایج نهایی
+                    // Game 8
                     { userId: 'rey', matchId: 8, team: 'کنگو', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
                     { userId: 'rez', matchId: 8, team: 'انگلیس', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
                     { userId: 'sep', matchId: 8, team: 'انگلیس', amount: 10, odds: 1.5, result: 'win', profit: 5, type: 'manual' },
-                    { userId: 'شایان', matchId: 8, team: 'کنگو', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' }
+                    { userId: 'شایان', matchId: 8, team: 'کنگو', amount: 10, odds: 2.0, result: 'lose', profit: -10, type: 'manual' },
+                    // Game 9
+                    { userId: 'rey', matchId: 9, team: 'بلژیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'sep', matchId: 9, team: 'بلژیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'rez', matchId: 9, team: 'بلژیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 9, team: 'بلژیک', amount: 10, odds: 1.5, result: null, profit: 0, type: 'manual' },
+                    // Game 10
+                    { userId: 'rey', matchId: 10, team: 'آمریکا', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'sep', matchId: 10, team: 'آمریکا', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'rez', matchId: 10, team: 'آمریکا', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' },
+                    { userId: 'شایان', matchId: 10, team: 'آمریکا', amount: 10, odds: 1.1, result: null, profit: 0, type: 'manual' }
                 ],
                 matches: [
                     { id: 1, team1: 'کانادا', team2: 'آفریقای جنوبی', odds1: 1.5, odds2: 2.0, result: 'کانادا', resultDetail: '۱-۰', status: 'closed', time: '۲۲:۳۰ - ۷ تیر' },
@@ -252,7 +262,7 @@
             function showVersionAlert() {
                 const alertDiv = document.createElement('div');
                 alertDiv.className = 'version-alert';
-                alertDiv.innerHTML = '✨ نتیجه بازی انگلیس-کنگو ثبت شد';
+                alertDiv.innerHTML = '✨ بازی جاری هوشمند فعال شد';
                 document.body.prepend(alertDiv);
                 setTimeout(() => alertDiv.remove(), 5000);
             }
@@ -296,6 +306,76 @@
             function getUserById(id) { return appData.users.find(u => u.id === id); }
             function getMatchById(id) { return appData.matches.find(m => m.id === id); }
 
+            // تابع تبدیل خودکار بازی‌های پیش‌رو به جاری
+            function promoteUpcomingMatches() {
+                let changed = false;
+                const now = Date.now();
+                appData.matches.forEach(m => {
+                    if (m.status === 'upcoming') {
+                        const parts = m.time.split(' - ');
+                        if (parts.length === 2) {
+                            const timePart = parts[0].trim();
+                            const datePart = parts[1].trim();
+                            const [h, min] = timePart.split(':').map(Number);
+                            const [day, monthName] = datePart.split(' ');
+                            const monthMap = {
+                                'فروردین':0,'اردیبهشت':1,'خرداد':2,'تیر':3,
+                                'مرداد':4,'شهریور':5,'مهر':6,'آبان':7,
+                                'آذر':8,'دی':9,'بهمن':10,'اسفند':11
+                            };
+                            const month = monthMap[monthName];
+                            if (month !== undefined && !isNaN(h) && !isNaN(min) && !isNaN(day)) {
+                                const matchDate = new Date(new Date().getFullYear(), month, day, h, min);
+                                if (now >= matchDate.getTime()) {
+                                    m.status = 'open';
+                                    changed = true;
+                                }
+                            }
+                        }
+                    }
+                });
+                if (changed) {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+                    if (currentUser) renderApp();
+                }
+            }
+            promoteUpcomingMatches();
+            setInterval(promoteUpcomingMatches, 60000);
+
+            // یافتن نزدیک‌ترین بازی پیش‌رو برای نمایش به‌عنوان بازی جاری
+            function getCurrentMatch() {
+                const upcoming = appData.matches.filter(m => m.status === 'upcoming' || m.status === 'open');
+                if (upcoming.length === 0) return null;
+                // پیدا کردن بازی با نزدیک‌ترین زمان
+                const now = Date.now();
+                let closest = upcoming[0];
+                let closestDiff = Infinity;
+                upcoming.forEach(m => {
+                    const parts = m.time.split(' - ');
+                    if (parts.length === 2) {
+                        const timePart = parts[0].trim();
+                        const datePart = parts[1].trim();
+                        const [h, min] = timePart.split(':').map(Number);
+                        const [day, monthName] = datePart.split(' ');
+                        const monthMap = {
+                            'فروردین':0,'اردیبهشت':1,'خرداد':2,'تیر':3,
+                            'مرداد':4,'شهریور':5,'مهر':6,'آبان':7,
+                            'آذر':8,'دی':9,'بهمن':10,'اسفند':11
+                        };
+                        const month = monthMap[monthName];
+                        if (month !== undefined && !isNaN(h) && !isNaN(min) && !isNaN(day)) {
+                            const matchDate = new Date(new Date().getFullYear(), month, day, h, min);
+                            const diff = Math.abs(matchDate.getTime() - now);
+                            if (diff < closestDiff) {
+                                closestDiff = diff;
+                                closest = m;
+                            }
+                        }
+                    }
+                });
+                return closest;
+            }
+
             function getUserBetRowClass(userId, matchId) {
                 const bet = appData.bets.find(b => b.userId === userId && b.matchId === matchId);
                 if (!bet) return 'tr-no-bet';
@@ -310,7 +390,7 @@
                 const vs = '<span class="match-vs">🆚</span>';
                 const timeInfo = `<div class="match-info">📅 ${m.time}</div>`;
                 const resultInfo = showResult && m.result ? `<div class="result-detail">نتیجه: ${m.result} ${m.resultDetail ? '(' + m.resultDetail + ')' : ''}</div>` : '';
-                const pulseClass = m.status === 'open' ? ' pulse-border' : '';
+                const pulseClass = m.status === 'open' || m === getCurrentMatch() ? ' pulse-border' : '';
                 return `<div class="card${pulseClass}" style="margin-bottom:12px;"><div class="match-row">${team1Card} ${vs} ${team2Card}</div>${timeInfo}${resultInfo}</div>`;
             }
 
@@ -344,7 +424,7 @@
             }
 
             function attachLoginEvents() {
-                document.getElementById('btnLoginUser').onclick = () => {
+                const doUserLogin = () => {
                     const uid = document.getElementById('loginUsername').value.trim();
                     const pwd = document.getElementById('loginPassword').value.trim();
                     if (!uid || !pwd) return alert('لطفاً هر دو فیلد را پر کنید.');
@@ -355,13 +435,21 @@
                         renderApp();
                     } else alert('❌ نام کاربری یا رمز اشتباه است.');
                 };
+                document.getElementById('btnLoginUser').onclick = doUserLogin;
+                // ورود با اینتر در فیلد رمز کاربر
+                document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        doUserLogin();
+                    }
+                });
                 document.getElementById('btnAdminLogin').onclick = () => {
                     document.getElementById('adminPassInput').value = '';
                     document.getElementById('adminPassError').textContent = '';
                     document.getElementById('adminPassModal').classList.add('active');
                     document.getElementById('adminPassInput').focus();
                 };
-                document.getElementById('btnConfirmAdmin').onclick = () => {
+                const doAdminLogin = () => {
                     const pass = document.getElementById('adminPassInput').value.trim();
                     if (pass === '123123456') {
                         currentUser = { id: 'admin', name: 'ادمین' };
@@ -372,6 +460,14 @@
                         document.getElementById('adminPassError').textContent = '❌ رمز اشتباه است';
                     }
                 };
+                document.getElementById('btnConfirmAdmin').onclick = doAdminLogin;
+                // ورود ادمین با اینتر
+                document.getElementById('adminPassInput').addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        doAdminLogin();
+                    }
+                });
                 document.getElementById('closeAdminModal').onclick = () => {
                     document.getElementById('adminPassModal').classList.remove('active');
                 };
@@ -383,8 +479,8 @@
             function renderUserPanel() {
                 const user = getUserById(currentUser.id);
                 if (!user) { logout(); return ''; }
-                const openMatches = appData.matches.filter(m => m.status === 'open');
-                const upcomingMatches = appData.matches.filter(m => m.status === 'upcoming');
+                const currentMatch = getCurrentMatch();
+                const upcomingMatches = appData.matches.filter(m => (m.status === 'upcoming' || m.status === 'open') && m !== currentMatch);
                 const closedMatches = appData.matches.filter(m => m.status === 'closed');
                 const bets = appData.bets.filter(b => b.userId === user.id);
 
@@ -408,7 +504,7 @@
                         <button class="tab-btn" data-tab="history">📋 تاریخچه من</button>
                     </div>
                     <div class="tab-content active" id="tab-dashboard">
-                        ${openMatches.length > 0 ? `<h3>🟢 بازی جاری</h3>${openMatches.map(m => renderMatchCard(m)).join('')}` : '<p style="text-align:center;">هیچ بازی جاری‌ای وجود ندارد.</p>'}
+                        ${currentMatch ? `<h3>🟢 بازی جاری</h3>${renderMatchCard(currentMatch)}` : '<p style="text-align:center;">هیچ بازی جاری‌ای وجود ندارد.</p>'}
                         ${upcomingMatches.length > 0 ? `<h3>🔵 بازی‌های پیش‌رو</h3>${upcomingMatches.map(m => renderMatchCard(m)).join('')}` : ''}
                     </div>
 
@@ -510,12 +606,12 @@
             }
 
             function renderMatchesSummary() {
-                const open = appData.matches.filter(m => m.status === 'open');
-                const upcoming = appData.matches.filter(m => m.status === 'upcoming');
+                const currentMatch = getCurrentMatch();
+                const upcomingMatches = appData.matches.filter(m => (m.status === 'upcoming' || m.status === 'open') && m !== currentMatch);
                 const closed = appData.matches.filter(m => m.status === 'closed');
                 let html = '';
-                if (open.length > 0) { html += '<h3>🟢 بازی‌های جاری</h3>' + open.map(m => renderMatchCard(m)).join(''); }
-                if (upcoming.length > 0) { html += '<h3>🔵 بازی‌های پیش‌رو</h3>' + upcoming.map(m => renderMatchCard(m)).join(''); }
+                if (currentMatch) { html += '<h3>🟢 بازی جاری</h3>' + renderMatchCard(currentMatch); }
+                if (upcomingMatches.length > 0) { html += '<h3>🔵 بازی‌های پیش‌رو</h3>' + upcomingMatches.map(m => renderMatchCard(m)).join(''); }
                 if (closed.length > 0) { html += '<h3>⚫ بازی‌های گذشته</h3>' + closed.map(m => renderMatchCard(m, true)).join(''); }
                 return html;
             }
