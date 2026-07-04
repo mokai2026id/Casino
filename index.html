@@ -92,7 +92,7 @@
         if('serviceWorker' in navigator){navigator.serviceWorker.register("data:text/javascript,"+encodeURIComponent("self.addEventListener('fetch',function(e){e.respondWith(fetch(e.request))});"))}
 
         (function(){
-            const STORAGE_KEY='casinoFamilyV10',VERSION_KEY='casinoDataVersion',AUTO_LOGIN_KEY='casinoAutoLogin',MEDAL_ROUND16_KEY='casinoMedalRound16',DATA_VERSION=68;
+            const STORAGE_KEY='casinoFamilyV10',VERSION_KEY='casinoDataVersion',AUTO_LOGIN_KEY='casinoAutoLogin',MEDAL_ROUND16_KEY='casinoMedalRound16',DATA_VERSION=69;
             
             function getDisplayVersion(){if(DATA_VERSION>=1e9)return"2.0";const m=(Math.log10(DATA_VERSION)+1)*0.1;return"1."+m.toFixed(3)}
             function updateFooter(){const f=document.getElementById('footerText');if(f)f.textContent=`طراح محمدمهدی | نسخه ${getDisplayVersion()} | ۱۴۰۵`}
@@ -145,7 +145,6 @@
                 ],
                 awards:[
                     {userId:'rey',amount:10,reason:'🎁 کاربر فعال',date:new Date('2026-07-02').getTime()}
-                    // مدال برنز از اینجا حذف شد و فقط توسط تابع awardRound16Medal اضافه می‌شود
                 ]
             };
 
@@ -215,7 +214,6 @@
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
                     localStorage.setItem(MEDAL_ROUND16_KEY, 'true');
                     medalModalInfo = { userId: bestUser.id, reason: '🥉 بهترین بازیکن دور یک‌شانزدهم', amount: 10 };
-                    alert(`🥉 مدال برنز دور یک‌شانزدهم به ${bestUser.name} تعلق گرفت!`);
                     if(currentUser) renderApp();
                 }
             }
