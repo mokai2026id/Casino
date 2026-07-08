@@ -59,16 +59,7 @@
         .award-card.pending .award-amount{color:var(--text-secondary)!important}
         .welcome-toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:rgba(212,168,67,0.9);color:#000;padding:12px 24px;border-radius:30px;font-weight:bold;font-size:1.1em;z-index:3000;animation:fadeInOut 3s ease forwards;white-space:nowrap}
         @keyframes fadeInOut{0%{opacity:0;transform:translateX(-50%) translateY(-20px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}70%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-10px)}}
-        .bracket-container{overflow-x:auto;padding:20px 0}
-        .bracket-tree{display:flex;gap:16px;min-width:1000px;justify-content:center}
-        .bracket-column{display:flex;flex-direction:column;gap:6px;justify-content:center;min-width:130px}
-        .bracket-column h4{text-align:center;color:var(--gold);margin-bottom:6px;font-size:0.7em}
-        .bracket-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px;font-size:0.65em;display:flex;flex-direction:column;gap:3px;min-height:50px;justify-content:center;align-items:center;text-align:center}
-        .bracket-box.winner-box{border-color:var(--gold);box-shadow:0 0 8px rgba(212,168,67,0.3)}
-        .bracket-team-name{font-weight:500}
-        .bracket-team-name.winner{color:#2ecc71;font-weight:bold}
-        .bracket-team-name.eliminated{color:#aaa}
-        .float-gift{position:fixed;bottom:120px;right:20px;width:60px;height:60px;border-radius:50%;background:var(--gold);color:#000;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(212,168,67,0.7);z-index:1500;animation:floatGift 2s ease-in-out infinite}
+        .float-gift{position:fixed;bottom:120px;right:20px;width:60px;height:60px;border-radius:50%;background:var(--gold);color:#000;font-size:28px;display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(212,168,67,0.7);z-index:1500;animation:floatGift 2s ease-in-out infinite}
         @keyframes floatGift{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
         @media print{body{background:white!important;color:black!important}.card,.card::before,.modal-box{background:white!important;border:1px solid #ccc!important;box-shadow:none!important;color:black!important;page-break-inside:avoid}.btn,.help-float,.modal-overlay,.version-alert,.pulse-border,.coin-spin,.float-gift{display:none!important}table{font-size:0.8em;color:black}th{background:#eee!important;color:black!important}td{border-bottom:1px solid #ccc}.footer-text,.print-btn{display:none!important}.app-container{max-width:100%!important}}
     </style>
@@ -83,20 +74,34 @@
     <div class="modal-overlay" id="changePassModal"><div class="modal-box"><button class="modal-close" id="closeChangePassModal">&times;</button><h2>🔒 تغییر رمز</h2><input type="password" id="oldPassInput" placeholder="رمز فعلی" inputmode="numeric" pattern="[0-9]*" style="text-align:center"><input type="password" id="newPassInput" placeholder="رمز جدید (حداقل ۴ رقم)" inputmode="numeric" pattern="[0-9]*" style="text-align:center"><input type="password" id="repeatNewPassInput" placeholder="تکرار رمز جدید" inputmode="numeric" pattern="[0-9]*" style="text-align:center"><button class="btn btn-gold" id="btnConfirmChangePass">ذخیره</button><p id="changePassError" style="color:#e74c3c;text-align:center;margin-top:8px"></p></div></div>
     <div class="modal-overlay" id="medalCongratsModal"><div class="modal-box" style="text-align:center"><span style="font-size:4em">🥉</span><h2 style="color:#ffd700">تبریک!</h2><p id="medalCongratsText"></p><p style="font-size:0.9em;color:var(--text-secondary)">می‌توانید این افتخار را در بخش <b>🏆 افتخارات</b> مشاهده کنید.</p><button class="btn btn-gold" id="closeMedalCongrats">متوجه شدم</button></div></div>
     <div class="modal-overlay" id="round16EndModal"><div class="modal-box" style="text-align:center"><span style="font-size:4em">🏆</span><h2 style="color:#ffd700">پایان دور یک‌شانزدهم</h2><p id="round16EndText"></p><button class="btn btn-gold" id="closeRound16EndModal">متوجه شدم</button></div></div>
-    <div class="modal-overlay" id="secretGiftModal"><div class="modal-box" style="text-align:center"><span style="font-size:4em">🎁</span><h2 style="color:#ffd700">کادوی مخفی!</h2><p>شما یک کادوی ویژه پیدا کردید!</p><p style="font-size:1.5em;font-weight:bold;letter-spacing:4px;margin:16px 0">۹۹۹۹</p><p style="font-size:0.9em;color:var(--text-secondary)">این کد ۴ رقمی را به ادمین اعلام کنید تا جایزه <b>۱۰,۰۰۰ تومانی</b> بازیکن فعال را دریافت کنید.</p><button class="btn btn-gold" id="closeSecretGiftModal">متوجه شدم</button></div></div>
+    <div class="modal-overlay" id="secretGiftModal"><div class="modal-box" style="text-align:center"><span style="font-size:4em">🎁</span><h2 style="color:#ffd700">کادوی مخفی!</h2><p>شما یک کادوی ویژه پیدا کردید!</p><p style="font-size:1.5em;font-weight:bold;letter-spacing:4px;margin:16px 0" id="secretGiftCode"></p><p style="font-size:0.9em;color:var(--text-secondary)">این کد ۴ رقمی را به ادمین اعلام کنید تا جایزه <b>۱۰,۰۰۰ تومانی</b> بازیکن فعال را دریافت کنید.</p><button class="btn btn-gold" id="closeSecretGiftModal">متوجه شدم</button></div></div>
 
     <script>
         document.addEventListener('copy', function(e) { e.preventDefault(); });
         document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 
+        // تابعی برای ادمین: پس از اعلام کد، این تابع را با نام کاربری (id) در کنسول اجرا کنید
+        window.claimSecretGift = function(userId) {
+            const u = getUserById(userId);
+            if (!u) return alert('کاربر یافت نشد.');
+            if (localStorage.getItem('secretGiftQuarterClaimed') === 'true') return alert('این هدیه قبلاً دریافت شده است.');
+            u.balance += 10;
+            appData.awards.push({userId: u.id, amount:10, reason:'🎁 کاربر فعال', date:Date.now()});
+            localStorage.setItem('secretGiftQuarterClaimed', 'true');
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+            document.getElementById('floatGift').style.display = 'none';
+            renderApp();
+            alert(`✅ هدیه کاربر فعال به ${u.name} تعلق گرفت و ۱۰,۰۰۰ تومان به موجودی اضافه شد.`);
+        };
+
         (function(){
-            const STORAGE_KEY='casinoFamilyV10',VERSION_KEY='casinoDataVersion',AUTO_LOGIN_KEY='casinoAutoLogin',MEDAL_ROUND16_KEY='casinoMedalRound16',DATA_VERSION=79;
+            const STORAGE_KEY='casinoFamilyV10',VERSION_KEY='casinoDataVersion',AUTO_LOGIN_KEY='casinoAutoLogin',MEDAL_ROUND16_KEY='casinoMedalRound16',MEDAL_QUARTER_KEY='casinoMedalQuarter',DATA_VERSION=82;
             
             function getDisplayVersion(){if(DATA_VERSION>=1e9)return"2.0";const m=(Math.log10(DATA_VERSION)+1)*0.1;return"1."+m.toFixed(3)}
             function updateFooter(){const f=document.getElementById('footerText');if(f)f.textContent=`طراح محمدمهدی | نسخه ${getDisplayVersion()} | ۱۴۰۵`}
 
             const DEFAULT_DATA={
-                users:[{id:'rez',name:'رضا',password:'1234',balance:-19},{id:'sep',name:'سپیده',password:'5678',balance:-24},{id:'rey',name:'ریحانه',password:'1111',balance:23},{id:'شایان',name:'شایان',password:'2222',balance:-23}],
+                users:[{id:'rez',name:'رضا',password:'1234',balance:-9},{id:'sep',name:'سپیده',password:'5678',balance:-34},{id:'rey',name:'ریحانه',password:'1111',balance:23},{id:'شایان',name:'شایان',password:'2222',balance:-23}],
                 bets:[
                     {userId:'rez',matchId:1,team:'کانادا',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'sep',matchId:1,team:'کانادا',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'rey',matchId:1,team:'کانادا',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'شایان',matchId:1,team:'آفریقای جنوبی',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},
                     {userId:'sep',matchId:2,team:'ژاپن',amount:10,odds:1.5,result:'lose',profit:-10,type:'manual'},{userId:'شایان',matchId:2,team:'ژاپن',amount:10,odds:1.5,result:'lose',profit:-10,type:'manual'},{userId:'rey',matchId:2,team:'برزیل',amount:10,odds:2.0,result:'win',profit:10,type:'manual'},{userId:'rez',matchId:2,team:'برزیل',amount:10,odds:2.0,result:'win',profit:10,type:'manual'},
@@ -119,14 +124,8 @@
                     {userId:'rey',matchId:20,team:'انگلیس',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'rez',matchId:20,team:'انگلیس',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'شایان',matchId:20,team:'انگلیس',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'sep',matchId:20,team:'مکزیک',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},
                     {userId:'rey',matchId:21,team:'پرتغال',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},{userId:'شایان',matchId:21,team:'پرتغال',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},{userId:'rez',matchId:21,team:'پرتغال',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},{userId:'sep',matchId:21,team:'اسپانیا',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},
                     {userId:'sep',matchId:22,team:'آمریکا',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},{userId:'rez',matchId:22,team:'آمریکا',amount:10,odds:2.0,result:'lose',profit:-10,type:'manual'},{userId:'rey',matchId:22,team:'بلژیک',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},{userId:'شایان',matchId:22,team:'بلژیک',amount:10,odds:1.5,result:'win',profit:5,type:'manual'},
-                    // بازی ۲۳ - تسویه شده
-                    {userId:'sep',matchId:23,team:'آرژانتین',amount:10,odds:1.1,result:'win',profit:1,type:'manual'},
-                    {userId:'rey',matchId:23,team:'آرژانتین',amount:10,odds:1.1,result:'win',profit:1,type:'manual'},
-                    // بازی ۲۴ - شرط‌های جدید
-                    {userId:'rez',matchId:24,team:'سوئیس',amount:10,odds:2.0,result:null,profit:0,type:'manual'},
-                    {userId:'شایان',matchId:24,team:'کلمبیا',amount:10,odds:1.5,result:null,profit:0,type:'manual'},
-                    {userId:'sep',matchId:24,team:'کلمبیا',amount:10,odds:1.5,result:null,profit:0,type:'manual'},
-                    {userId:'rey',matchId:24,team:'کلمبیا',amount:10,odds:1.5,result:null,profit:0,type:'manual'}
+                    {userId:'sep',matchId:23,team:'آرژانتین',amount:10,odds:1.1,result:'win',profit:1,type:'manual'},{userId:'rey',matchId:23,team:'آرژانتین',amount:10,odds:1.1,result:'win',profit:1,type:'manual'},
+                    {userId:'rez',matchId:24,team:'سوئیس',amount:10,odds:2.0,result:'win',profit:10,type:'manual'},{userId:'شایان',matchId:24,team:'کلمبیا',amount:10,odds:1.5,result:'lose',profit:-10,type:'manual'},{userId:'sep',matchId:24,team:'کلمبیا',amount:10,odds:1.5,result:'lose',profit:-10,type:'manual'},{userId:'rey',matchId:24,team:'کلمبیا',amount:10,odds:1.5,result:'lose',profit:-10,type:'manual'}
                 ],
                 matches:[
                     {id:1,team1:'کانادا',team2:'آفریقای جنوبی',odds1:1.5,odds2:2.0,result:'کانادا',resultDetail:'۱-۰',status:'closed',time:'۲۲:۳۰ - ۷ تیر'},
@@ -152,11 +151,18 @@
                     {id:21,team1:'پرتغال',team2:'اسپانیا',odds1:2.0,odds2:1.5,result:'اسپانیا',resultDetail:'۱-۰',status:'closed',time:'۲۲:۳۰ - ۱۵ تیر'},
                     {id:22,team1:'آمریکا',team2:'بلژیک',odds1:2.0,odds2:1.5,result:'بلژیک',resultDetail:'۴-۱',status:'closed',time:'۰۳:۳۰ - ۱۶ تیر'},
                     {id:23,team1:'آرژانتین',team2:'مصر',odds1:1.1,odds2:5.0,result:'آرژانتین',resultDetail:'۳-۲',status:'closed',time:'۱۹:۳۰ - ۱۶ تیر'},
-                    {id:24,team1:'سوئیس',team2:'کلمبیا',odds1:2.0,odds2:1.5,result:null,resultDetail:null,status:'upcoming',time:'۲۳:۳۰ - ۱۶ تیر'}
+                    {id:24,team1:'سوئیس',team2:'کلمبیا',odds1:2.0,odds2:1.5,result:'سوئیس',resultDetail:'۰-۰ (پنالتی ۴-۳ سوئیس)',status:'closed',time:'۲۳:۳۰ - ۱۶ تیر'},
+                    // یک‌چهارم نهایی
+                    {id:25,team1:'فرانسه',team2:'مراکش',odds1:1.5,odds2:2.0,result:null,resultDetail:null,status:'upcoming',time:'۲۳:۳۰ - ۱۸ تیر'},
+                    {id:26,team1:'اسپانیا',team2:'بلژیک',odds1:1.5,odds2:2.0,result:null,resultDetail:null,status:'upcoming',time:'۲۲:۳۰ - ۱۹ تیر'},
+                    {id:27,team1:'نروژ',team2:'انگلیس',odds1:1.5,odds2:2.0,result:null,resultDetail:null,status:'upcoming',time:'۰۰:۳۰ - ۲۱ تیر'},
+                    {id:28,team1:'آرژانتین',team2:'سوئیس',odds1:1.5,odds2:2.0,result:null,resultDetail:null,status:'upcoming',time:'۴:۳۰ - ۲۱ تیر'}
                 ],
                 awards:[
                     {userId:'rey',amount:10,reason:'🎁 کاربر فعال',date:new Date('2026-07-02').getTime()},
-                    {userId:'rey',amount:10,reason:'🥉 بهترین بازیکن دور یک‌شانزدهم',date:new Date('2026-07-03').getTime()}
+                    {userId:'rey',amount:10,reason:'🥉 بهترین بازیکن دور یک‌شانزدهم',date:new Date('2026-07-03').getTime()},
+                    {userId:'شایان',amount:10,reason:'🎁 کاربر فعال',date:Date.now()},
+                    {userId:'rey',amount:10,reason:'🥉 بهترین بازیکن دور یک‌هشتم',date:Date.now()}
                 ]
             };
 
@@ -164,7 +170,6 @@
             function getFlag(c){return countryFlags[c]||'🏳️'}
 
             const PENDING_AWARDS = [
-                {reason:'🥉 بهترین بازیکن دور یک‌هشتم', amount:10, desc:'بیشترین برد در بازی‌های دور یک‌هشتم'},
                 {reason:'🥈 بهترین بازیکن یک‌چهارم نهایی', amount:10, desc:'بیشترین برد در بازی‌های یک‌چهارم نهایی'},
                 {reason:'🥈 بهترین بازیکن نیمه‌نهایی', amount:10, desc:'بیشترین برد در بازی‌های نیمه‌نهایی'},
                 {reason:'🥇 بهترین بازیکن کل جام جهانی', amount:10, desc:'بیشترین برد در کل بازی‌های جام جهانی'},
@@ -186,7 +191,7 @@
                 return JSON.parse(JSON.stringify(DEFAULT_DATA));
             }
 
-            function showVersionAlert(){const d=document.createElement('div');d.className='version-alert';d.innerHTML='✨ نتایج جدید و کادوی مخفی فعال شد';document.body.prepend(d);setTimeout(()=>d.remove(),5000)}
+            function showVersionAlert(){const d=document.createElement('div');d.className='version-alert';d.innerHTML='✨ بازی‌های یک‌چهارم نهایی اضافه شد';document.body.prepend(d);setTimeout(()=>d.remove(),5000)}
             function showWelcomeToast(u){const e=document.querySelector('.welcome-toast');if(e)e.remove();const t=document.createElement('div');t.className='welcome-toast';t.textContent=`خوش آمدی ${u.name} 🌟`;document.body.appendChild(t);setTimeout(()=>{if(t.parentNode)t.remove()},3000)}
 
             let appData=loadData(),currentUser=null;
@@ -232,33 +237,44 @@
             }
             awardRound16Medal();
 
-            function promoteUpcomingMatches(){let c=false;const n=Date.now();appData.matches.forEach(m=>{if(m.status==='upcoming'){const p=m.time.split(' - ');if(p.length===2){const tp=p[0].trim(),dp=p[1].trim(),[h,mn]=tp.split(':').map(Number),[day,mnth]=dp.split(' '),mm={'فروردین':0,'اردیبهشت':1,'خرداد':2,'تیر':3,'مرداد':4,'شهریور':5,'مهر':6,'آبان':7,'آذر':8,'دی':9,'بهمن':10,'اسفند':11},month=mm[mnth];if(month!==undefined&&!isNaN(h)&&!isNaN(mn)&&!isNaN(day)){const md=new Date(new Date().getFullYear(),month,day,h,mn);if(n>=md.getTime()){m.status='closed';c=true}}}}});if(c){localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));if(currentUser)renderApp()}}
+            // مدال نقره یک‌چهارم
+            function awardQuarterMedal(){
+                if(localStorage.getItem(MEDAL_QUARTER_KEY)==='true') return;
+                const quarterMatches = appData.matches.filter(m=>m.id>=25&&m.id<=28);
+                const allClosed = quarterMatches.every(m=>m.status==='closed');
+                if(!allClosed) return;
+                if(appData.awards.some(a=>a.reason==='🥈 بهترین بازیکن یک‌چهارم نهایی')) return;
+                const userWins = {};
+                appData.users.forEach(u=>{userWins[u.id]=0;});
+                appData.bets.forEach(b=>{
+                    const m = getMatchById(b.matchId);
+                    if(m && m.id>=25 && m.id<=28 && b.result==='win'){
+                        userWins[b.userId] = (userWins[b.userId]||0)+1;
+                    }
+                });
+                let maxWins = 0;
+                appData.users.forEach(u=>{if(userWins[u.id] > maxWins) maxWins = userWins[u.id];});
+                const topUsers = appData.users.filter(u=>userWins[u.id] === maxWins);
+                let bestUser = topUsers[0];
+                if(topUsers.length > 1){
+                    bestUser = topUsers.reduce((a,b)=>a.balance > b.balance ? a : b);
+                }
+                if(bestUser){
+                    bestUser.balance += 10;
+                    appData.awards.push({userId:bestUser.id, amount:10, reason:'🥈 بهترین بازیکن یک‌چهارم نهایی', date:Date.now()});
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+                    localStorage.setItem(MEDAL_QUARTER_KEY, 'true');
+                    medalModalInfo = { userId: bestUser.id, reason: '🥈 بهترین بازیکن یک‌چهارم نهایی', amount: 10 };
+                    if(currentUser) renderApp();
+                }
+            }
+
+            function promoteUpcomingMatches(){let c=false;const n=Date.now();appData.matches.forEach(m=>{if(m.status==='upcoming'){const p=m.time.split(' - ');if(p.length===2){const tp=p[0].trim(),dp=p[1].trim(),[h,mn]=tp.split(':').map(Number),[day,mnth]=dp.split(' '),mm={'فروردین':0,'اردیبهشت':1,'خرداد':2,'تیر':3,'مرداد':4,'شهریور':5,'مهر':6,'آبان':7,'آذر':8,'دی':9,'بهمن':10,'اسفند':11},month=mm[mnth];if(month!==undefined&&!isNaN(h)&&!isNaN(mn)&&!isNaN(day)){const md=new Date(new Date().getFullYear(),month,day,h,mn);if(n>=md.getTime()){m.status='closed';c=true}}}}});if(c){localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));awardQuarterMedal();if(currentUser)renderApp()}}
             promoteUpcomingMatches();setInterval(promoteUpcomingMatches,60000);
 
             function getCurrentMatch(){const u=appData.matches.filter(m=>m.status==='upcoming'||m.status==='open');if(u.length===0)return null;const n=Date.now();let cl=u[0],cd=Infinity;u.forEach(m=>{if(!m.time)return;const p=m.time.split(' - ');if(p.length===2){const tp=p[0].trim(),dp=p[1].trim(),[h,mn]=tp.split(':').map(Number),[day,mnth]=dp.split(' '),mm={'فروردین':0,'اردیبهشت':1,'خرداد':2,'تیر':3,'مرداد':4,'شهریور':5,'مهر':6,'آبان':7,'آذر':8,'دی':9,'بهمن':10,'اسفند':11},month=mm[mnth];if(month!==undefined&&!isNaN(h)&&!isNaN(mn)&&!isNaN(day)){const md=new Date(new Date().getFullYear(),month,day,h,mn),d=Math.abs(md.getTime()-n);if(d<cd){cd=d;cl=m}}}});return cl}
 
             function renderMatchCard(m,sr=false){const t1=`<div class="team-card"><span class="flag">${getFlag(m.team1)}</span><span class="name">${m.team1}</span><span class="odds">${m.odds1}x</span></div>`,t2=`<div class="team-card"><span class="flag">${getFlag(m.team2)}</span><span class="name">${m.team2}</span><span class="odds">${m.odds2}x</span></div>`,ti=`<div class="match-info">📅 ${m.time}</div>`,ri=sr&&m.result?`<div class="result-detail">نتیجه: ${m.result} ${m.resultDetail?'('+m.resultDetail+')':''}</div>`:'',pc=m.status==='open'||m===getCurrentMatch()?' pulse-border':'';return`<div class="card${pc}" style="margin-bottom:12px;"><div class="match-row">${t1} <span class="match-vs">🆚</span> ${t2}</div>${ti}${ri}</div>`}
-
-            const bracketPairs16=[{id:1,t1:'کانادا',t2:'آفریقای جنوبی'},{id:4,t1:'مراکش',t2:'هلند'},{id:3,t1:'آلمان',t2:'پاراگوئه'},{id:6,t1:'فرانسه',t2:'سوئد'},{id:9,t1:'بلژیک',t2:'سنگال'},{id:10,t1:'آمریکا',t2:'بوسنی'},{id:11,t1:'اسپانیا',t2:'اتریش'},{id:12,t1:'پرتغال',t2:'کرواسی'},{id:2,t1:'برزیل',t2:'ژاپن'},{id:5,t1:'نروژ',t2:'ساحل عاج'},{id:7,t1:'مکزیک',t2:'اکوادور'},{id:8,t1:'انگلیس',t2:'کنگو'},{id:13,t1:'سوئیس',t2:'الجزایر'},{id:14,t1:'مصر',t2:'استرالیا'},{id:15,t1:'آرژانتین',t2:'کیپ ورد'},{id:16,t1:'کلمبیا',t2:'غنا'}];
-            const bracketPairs8=[[17,18],[19,20],[21,22],[23,24]];
-
-            function getWinner(matchId){const m=getMatchById(matchId);return m&&m.result?m.result:null}
-
-            function renderBracket(){
-                const winners16=bracketPairs16.map(p=>getWinner(p.id));
-                const winners8=bracketPairs8.map(([a,b])=>{const w1=getWinner(a),w2=getWinner(b);return w1||w2||null;});
-                let h='<div class="bracket-container"><div class="bracket-tree">';
-                h+='<div class="bracket-column"><h4>یک‌شانزدهم</h4>';
-                bracketPairs16.forEach(p=>{const w=getWinner(p.id),c1=w===p.t1?'winner':(w&&w!==p.t1?'eliminated':''),c2=w===p.t2?'winner':(w&&w!==p.t2?'eliminated':'');h+=`<div class="bracket-box${w?' winner-box':''}"><span class="bracket-team-name ${c1}">${getFlag(p.t1)} ${p.t1}</span><span style="font-size:0.7em;color:#aaa">vs</span><span class="bracket-team-name ${c2}">${p.t2} ${getFlag(p.t2)}</span>${w?`<span style="color:#2ecc71;font-size:0.7em">✅ ${w}</span>`:`<span style="color:#f1c40f;font-size:0.7em">⏳</span>`}</div>`});
-                h+='</div><div class="bracket-column"><h4>یک‌هشتم</h4>';
-                bracketPairs8.forEach(([a,b])=>{const w1=getWinner(a),w2=getWinner(b),w=w1||w2,c1=w===w1?'winner':(w&&w!==w1?'eliminated':''),c2=w===w2?'winner':(w&&w!==w2?'eliminated':'');h+=`<div class="bracket-box${w?' winner-box':''}"><span class="bracket-team-name ${c1}">${w1?getFlag(w1)+' '+w1:'?'}</span><span style="font-size:0.7em;color:#aaa">vs</span><span class="bracket-team-name ${c2}">${w2?getFlag(w2)+' '+w2:'?'}</span>${w?`<span style="color:#2ecc71;font-size:0.7em">✅ ${w}</span>`:`<span style="color:#f1c40f;font-size:0.7em">⏳</span>`}</div>`});
-                h+='</div><div class="bracket-column"><h4>یک‌چهارم</h4>';
-                for(let i=0;i<4;i++){const w1=winners8[i*2]||'?',w2=winners8[i*2+1]||'?',bk=w1!=='?'&&w2!=='?';h+=`<div class="bracket-box${bk?' winner-box':''}"><span class="bracket-team-name${w1!=='?'?' winner':''}">${w1!=='?'?getFlag(w1)+' '+w1:'?'}</span><span style="font-size:0.7em;color:#aaa">vs</span><span class="bracket-team-name${w2!=='?'?' winner':''}">${w2!=='?'?getFlag(w2)+' '+w2:'?'}</span></div>`}
-                h+='</div><div class="bracket-column"><h4>نیمه‌نهایی</h4>';
-                for(let i=0;i<2;i++)h+=`<div class="bracket-box"><span style="color:#aaa">؟ vs ?</span></div>`;
-                h+='</div><div class="bracket-column"><h4>🏆 فینال</h4><div class="bracket-box"><span style="color:#aaa">؟ vs ?</span></div></div>';
-                h+='</div></div>';return h;
-            }
 
             function renderApp(){const c=document.getElementById('appContainer');if(!currentUser){c.classList.remove('wide');c.innerHTML=renderLogin();attachLoginEvents()}else if(currentUser.id==='admin'){c.classList.add('wide');c.innerHTML=renderAdminPanel();attachAdminEvents()}else{c.classList.remove('wide');c.innerHTML=renderUserPanel();attachUserEvents()}}
 
@@ -278,7 +294,6 @@
 🥉 مدال برنز این مرحله با ${wins} برد به ${winner.name} تعلق گرفت (۱۰,۰۰۰ تومان).
 
 🎯 اما هنوز مدال‌های زیادی باقی‌مونده:
-🥉 بهترین بازیکن دور یک‌هشتم
 🥈 بهترین بازیکن یک‌چهارم نهایی
 🥈 بهترین بازیکن نیمه‌نهایی
 🥇 بهترین بازیکن کل جام
@@ -299,7 +314,7 @@
                 medalModalInfo = null;
             }
             setTimeout(()=>{ showRound16EndNotification(currentUser.id); }, 800);
-            return`<div class="card"><div style="display:flex;justify-content:space-between"><span>👤 ${u.name} (${u.id})</span><div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btnChangePass">🔒 تغییر رمز</button><button class="btn btn-outline btn-sm" id="btnLogout">🚪 خروج</button></div></div><div class="balance-big ${bc}">💰 موجودی: ${bt}</div></div><div class="card"><div class="tabs"><button class="tab-btn active" data-tab="dashboard">📊 بازی‌ها</button><button class="tab-btn" data-tab="bracket">🏟 مراحل</button><button class="tab-btn" data-tab="history">📋 تاریخچه</button><button class="tab-btn" data-tab="awards">🏆 افتخارات</button></div><div class="tab-content active" id="tab-dashboard">${cm?`<h3>🟢 بازی جاری</h3>${renderMatchCard(cm)}`:'<p style="text-align:center">هیچ بازی جاری‌ای وجود ندارد.</p>'}${um.length>0?`<h3>🔵 بازی‌های پیش‌رو</h3>${um.map(m=>renderMatchCard(m)).join('')}`:''}</div><div class="tab-content" id="tab-bracket">${renderBracket()}</div><div class="tab-content" id="tab-history"><h3>📋 تاریخچه شرط‌های من</h3>${cb.length===0&&pb.length===0?'<p>شرطی ثبت نشده.</p>':''}${cb.length>0?`<div class="table-responsive"><table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>نتیجه</th><th>سود/زیان</th></tr></thead><tbody>${cb.map(b=>{const m=getMatchById(b.matchId),rc=b.result==='win'?'tr-win':'tr-lose',d=m&&m.resultDetail?` (${m.resultDetail})`:'',rd=b.result==='win'?`<span class="highlight-result" style="color:#2ecc71">${m?m.result:''} ${m?getFlag(m.result):''}${d} <span class="coin-spin">💰</span></span>`:`<span class="highlight-result" style="color:#e74c3c">${m?m.result:''} ${m?getFlag(m.result):''}${d} <span class="lose-x">❌</span></span>`;return`<tr class="${rc}"><td>${m?m.team1+' '+getFlag(m.team1)+' vs '+m.team2+' '+getFlag(m.team2):'?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatToman(b.amount)}</td><td>${rd}</td><td style="color:${b.result==='win'?'#2ecc71':'#e74c3c'}">${formatToman(b.profit)}</td></tr>`}).join('')}</tbody></table></div>`:''}${pb.length>0?`<h4>🕒 شرط‌های در انتظار</h4><div class="table-responsive"><table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody>${pb.map(b=>{const m=getMatchById(b.matchId);return`<tr><td>${m?m.team1+' '+getFlag(m.team1)+' vs '+m.team2+' '+getFlag(m.team2):'?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatToman(b.amount)}</td><td><span class="badge badge-info">در انتظار</span></td></tr>`}).join('')}</tbody></table></div>`:''}</div><div class="tab-content" id="tab-awards"><h3>🏆 افتخارات</h3>${ua.length>0?`<div style="display:flex;flex-direction:column;gap:16px;margin-bottom:16px">${ua.map(a=>{const d=new Date(a.date),ds=d.toLocaleDateString('fa-IR');return`<div class="award-card"><div class="award-emoji">${a.reason.includes('🥉')?'🥉':a.reason.includes('🥈')?'🥈':a.reason.includes('🥇')?'🥇':a.reason.includes('🏆')?'🏆':'🎁'}</div><div class="award-title">${a.reason}</div><div class="award-amount">${formatToman(a.amount)}</div><div class="award-date">📅 ${ds}</div></div>`}).join('')}</div>`:''}<h4 style="margin-top:16px">🏅 مدال‌های در انتظار</h4>${PENDING_AWARDS.map(a=>`<div class="award-card pending"><div class="award-emoji">${a.reason.includes('🥉')?'🥉':a.reason.includes('🥈')?'🥈':a.reason.includes('🥇')?'🥇':a.reason.includes('🏆')?'🏆':'🎁'}</div><div class="award-title">${a.reason}</div><div class="award-amount">${formatToman(a.amount)}</div><div style="font-size:0.8em;color:var(--text-secondary);margin-top:4px">${a.desc}</div></div>`).join('')}</div></div>`}
+            return`<div class="card"><div style="display:flex;justify-content:space-between"><span>👤 ${u.name} (${u.id})</span><div style="display:flex;gap:8px"><button class="btn btn-outline btn-sm" id="btnChangePass">🔒 تغییر رمز</button><button class="btn btn-outline btn-sm" id="btnLogout">🚪 خروج</button></div></div><div class="balance-big ${bc}">💰 موجودی: ${bt}</div></div><div class="card"><div class="tabs"><button class="tab-btn active" data-tab="dashboard">📊 بازی‌ها</button><button class="tab-btn" data-tab="history">📋 تاریخچه</button><button class="tab-btn" data-tab="awards">🏆 افتخارات</button></div><div class="tab-content active" id="tab-dashboard">${cm?`<h3>🟢 بازی جاری</h3>${renderMatchCard(cm)}`:'<p style="text-align:center">هیچ بازی جاری‌ای وجود ندارد.</p>'}${um.length>0?`<h3>🔵 بازی‌های پیش‌رو</h3>${um.map(m=>renderMatchCard(m)).join('')}`:''}</div><div class="tab-content" id="tab-history"><h3>📋 تاریخچه شرط‌های من</h3>${cb.length===0&&pb.length===0?'<p>شرطی ثبت نشده.</p>':''}${cb.length>0?`<div class="table-responsive"><table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>نتیجه</th><th>سود/زیان</th></tr></thead><tbody>${cb.map(b=>{const m=getMatchById(b.matchId),rc=b.result==='win'?'tr-win':'tr-lose',d=m&&m.resultDetail?` (${m.resultDetail})`:'',rd=b.result==='win'?`<span class="highlight-result" style="color:#2ecc71">${m?m.result:''} ${m?getFlag(m.result):''}${d} <span class="coin-spin">💰</span></span>`:`<span class="highlight-result" style="color:#e74c3c">${m?m.result:''} ${m?getFlag(m.result):''}${d} <span class="lose-x">❌</span></span>`;return`<tr class="${rc}"><td>${m?m.team1+' '+getFlag(m.team1)+' vs '+m.team2+' '+getFlag(m.team2):'?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatToman(b.amount)}</td><td>${rd}</td><td style="color:${b.result==='win'?'#2ecc71':'#e74c3c'}">${formatToman(b.profit)}</td></tr>`}).join('')}</tbody></table></div>`:''}${pb.length>0?`<h4>🕒 شرط‌های در انتظار</h4><div class="table-responsive"><table><thead><tr><th>بازی</th><th>تیم</th><th>مبلغ</th><th>وضعیت</th></tr></thead><tbody>${pb.map(b=>{const m=getMatchById(b.matchId);return`<tr><td>${m?m.team1+' '+getFlag(m.team1)+' vs '+m.team2+' '+getFlag(m.team2):'?'}</td><td>${b.team} ${getFlag(b.team)}</td><td>${formatToman(b.amount)}</td><td><span class="badge badge-info">در انتظار</span></td></tr>`}).join('')}</tbody></table></div>`:''}</div><div class="tab-content" id="tab-awards"><h3>🏆 افتخارات</h3>${ua.length>0?`<div style="display:flex;flex-direction:column;gap:16px;margin-bottom:16px">${ua.map(a=>{const d=new Date(a.date),ds=d.toLocaleDateString('fa-IR');return`<div class="award-card"><div class="award-emoji">${a.reason.includes('🥉')?'🥉':a.reason.includes('🥈')?'🥈':a.reason.includes('🥇')?'🥇':a.reason.includes('🏆')?'🏆':'🎁'}</div><div class="award-title">${a.reason}</div><div class="award-amount">${formatToman(a.amount)}</div><div class="award-date">📅 ${ds}</div></div>`}).join('')}</div>`:''}<h4 style="margin-top:16px">🏅 مدال‌های در انتظار</h4>${PENDING_AWARDS.map(a=>`<div class="award-card pending"><div class="award-emoji">${a.reason.includes('🥉')?'🥉':a.reason.includes('🥈')?'🥈':a.reason.includes('🥇')?'🥇':a.reason.includes('🏆')?'🏆':'🎁'}</div><div class="award-title">${a.reason}</div><div class="award-amount">${formatToman(a.amount)}</div><div style="font-size:0.8em;color:var(--text-secondary);margin-top:4px">${a.desc}</div></div>`).join('')}</div></div>`}
 
             function attachUserEvents(){document.getElementById('btnLogout').onclick=logout;document.getElementById('btnChangePass').onclick=()=>{document.getElementById('oldPassInput').value='';document.getElementById('newPassInput').value='';document.getElementById('repeatNewPassInput').value='';document.getElementById('changePassError').textContent='';document.getElementById('changePassModal').classList.add('active')};document.getElementById('btnConfirmChangePass').onclick=()=>{const o=document.getElementById('oldPassInput').value.trim(),n=document.getElementById('newPassInput').value.trim(),r=document.getElementById('repeatNewPassInput').value.trim(),u=getUserById(currentUser.id);if(!u)return;if(o!==u.password){document.getElementById('changePassError').textContent='❌ رمز فعلی اشتباه است';return}if(n.length<4){document.getElementById('changePassError').textContent='❌ رمز جدید باید حداقل ۴ رقم باشد';return}if(n!==r){document.getElementById('changePassError').textContent='❌ رمز جدید با تکرارش مطابقت ندارد';return}u.password=n;localStorage.setItem(STORAGE_KEY,JSON.stringify(appData));document.getElementById('changePassModal').classList.remove('active');alert('✅ رمز شما با موفقیت تغییر یافت.')};document.getElementById('closeChangePassModal').onclick=()=>document.getElementById('changePassModal').classList.remove('active');document.getElementById('changePassModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')});document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=function(){document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('tab-'+b.dataset.tab).classList.add('active')})}
 
@@ -311,19 +326,23 @@
 
             function logout(){currentUser=null;localStorage.removeItem(AUTO_LOGIN_KEY);renderApp()}
 
-            // کادوی شناور
-            const SECRET_GIFT_KEY='secretGiftClaimed';
-            if(localStorage.getItem(SECRET_GIFT_KEY)!=='true'){
-                document.getElementById('floatGift').style.display='flex';
-                document.getElementById('floatGift').addEventListener('click',function(){
+            // مدیریت هدیه شناور یک‌چهارم
+            const giftQuarterClaimed = localStorage.getItem('secretGiftQuarterClaimed') === 'true';
+            const match26 = appData.matches.find(m=>m.id===26);
+            const showQuarterGift = match26 && match26.status === 'closed' && !giftQuarterClaimed;
+            const floatGift = document.getElementById('floatGift');
+            if (showQuarterGift) {
+                floatGift.style.display = 'flex';
+                floatGift.onclick = function() {
+                    document.getElementById('secretGiftCode').innerText = '۷۷۶۶';
                     document.getElementById('secretGiftModal').classList.add('active');
-                });
-                document.getElementById('closeSecretGiftModal').addEventListener('click',function(){
-                    document.getElementById('secretGiftModal').classList.remove('active');
-                });
+                };
             } else {
-                document.getElementById('floatGift').style.display='none';
+                floatGift.style.display = 'none';
             }
+            document.getElementById('closeSecretGiftModal').addEventListener('click', function() {
+                document.getElementById('secretGiftModal').classList.remove('active');
+            });
 
             document.getElementById('helpFloat').addEventListener('click',()=>document.getElementById('helpModal').classList.add('active'));
             document.getElementById('closeHelpModal').addEventListener('click',()=>document.getElementById('helpModal').classList.remove('active'));
